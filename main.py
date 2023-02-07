@@ -2,11 +2,6 @@ import socket
 import threading
 import tkinter
 
-
-
-
-
-
 class Server(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
@@ -14,7 +9,7 @@ class Server(threading.Thread):
     def run(self):
         self.tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.tcpsock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
-        self.tcpsock.bind(("0.0.0.0",1234))
+        self.tcpsock.bind(("172.30.40.22",1234))
 
         while True:
             if self.tcpsock.listen: # si le serveur est en train d'écouté alors il peut prendre un port et accepté des client
@@ -33,10 +28,19 @@ class ClientThread(threading.Thread): # cette classe est un thread
 
     def __init__(self, ip, port, clientsocket):
         threading.Thread.__init__(self)
+        self.ip = ip
+        self.port = port
+        self.clientsocket = clientsocket
+
 
     def run(self): # cette fonction est appelé lorsqu'un client a réussi à ce connecter
    
         print("Connexion réussi")
+
+        # je vais commencer à attendre la réception de donnée
+        while True:
+            self.data_received = self.clientsocket.recv(1024)
+            print(self.data_received)
 
 
 
@@ -45,3 +49,8 @@ class ClientThread(threading.Thread): # cette classe est un thread
 class graphical_part:
     def __init__(self) -> None:
         pass
+
+
+
+newthread = Server()
+newthread.start()
