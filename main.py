@@ -3,26 +3,31 @@ import threading
 import tkinter
 
 class Server(threading.Thread):
+
+    kuka_connected = False
+
     def __init__(self):
         threading.Thread.__init__(self)
 
     def run(self):
         self.tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.tcpsock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
-        self.tcpsock.bind(("172.30.40.22",1234))
+        self.tcpsock.bind(("172.30.5.100",1234))
 
         while True:
             if self.tcpsock.listen: # si le serveur est en train d'écouté alors il peut prendre un port et accepté des client
                 self.tcpsock.listen(10)
                 print( "En écoute...")
                 (clientsocket, (ip, port)) = self.tcpsock.accept() # la méthode accept est une méthode (synchrone) qui va permettre d'accepter les client
-                newthread = ClientThread(ip, port, clientsocket)
+                newthread = ReceiveThread(ip, port, clientsocket)
                 newthread.start()
+                SendData.clientsocket = clientsocket # je définie le socket utilisé pour parler avec le robot
+
             else: # sinon on sort de la boucle
                 break
 
-
-class ClientThread(threading.Thread): # cette classe est un thread
+# region thread qui va permettre de gérer la communication avec le robot
+class ReceiveThread(threading.Thread):
 
     def __init__(self, ip, port, clientsocket):
         threading.Thread.__init__(self)
@@ -38,7 +43,8 @@ class ClientThread(threading.Thread): # cette classe est un thread
         # je vais commencer à attendre la réception de donnée
         while True:
             self.data_received = self.clientsocket.recv(1024)
-            print(self.data_received)
+            with open("input.xml","w") as f:
+                f.write(bytes.decode(self.data_received))
 
 
     def put_data_in_cache(self): # cette méthode servira à mettre les info que le kuka nous envoie dans un cache (qui pourra être lu par la suite)
@@ -48,6 +54,13 @@ class ClientThread(threading.Thread): # cette classe est un thread
         pass
 
 
+class SendData():
+    clientsocket = "" # cette objet va contenir le socket et u qu'il est utilisé qu'une seule fois, je la met en static
+
+    def Send(self):
+        self.clientsocket.sendall(b'hello')
+
+# endregion
 
 
 class graphical_part:
@@ -97,7 +110,7 @@ class graphical_part:
 
 
 
-graphical_part()
+server = Server()
+server.start()
 
-# server = Server()
-# server.start()
+# graphical_part()

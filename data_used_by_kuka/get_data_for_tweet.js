@@ -48,6 +48,7 @@ class make_all_request{
                 // create a document that sets the plot of the movie
                 const updateDoc = {
                 $set: {
+                    Sign: signs_taked_randommly,
                     Description: body_parsed.description,
                     Mood: body_parsed.mood,
                     lucky_number: body_parsed.lucky_number
