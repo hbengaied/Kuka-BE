@@ -45,8 +45,13 @@ class ReceiveThread(threading.Thread):
         # je vais commencer à attendre la réception de donnée
         while True:
             self.data_received = self.clientsocket.recv(1024)
-            with open("input.xml","w") as f:
-                f.write(bytes.decode(self.data_received))
+
+            f = open("input.xml","w")
+
+            f.write(bytes.decode(self.data_received))
+
+            f.close() # je m'assure que le fichier est bien fermé et donc que l'écriture est terminé avant de commencer à répondre au robot
+
             Conversation.Response()
 
 
@@ -145,6 +150,7 @@ class Conversation():
             
         except:
             print('une erreur de lecture est survenu je répondrai à la prochaine réception')
+
 
 
 server = Server()
