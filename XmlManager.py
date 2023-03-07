@@ -12,7 +12,7 @@ class XmlManager:
     def GetData(): # cette méthode va me permettre d'obtenir les données du fichier xml
 
         Tree = ET.parse("input.xml")
-        root = tree.getroot()
+        root = Tree.getroot()
 
         return root
 
@@ -58,19 +58,6 @@ class get_data_for_tweet:
 
         return document
 
-test = get_data_for_tweet.set_data_in_variable(sujet="basic") # c'est un message basique que le robot peut faire
-print(test["Description"]) # voila comment on peut avoir la description de ce que le robot va taper sur le clavier
-
-# Pour les test
-Data = {
-    "X" : "5",
-    "Y" : "5",
-    "Z" : "5",
-    "A" : "0",
-    "B" : "0",
-    "C" : "0",
-    "IPOC" : "125776545"
-}
-
-XmlManager.SetDataToSend(Data)
+# test = get_data_for_tweet.set_data_in_variable(sujet="basic") # c'est un message basique que le robot peut faire
+# print(test["Description"]) # voila comment on peut avoir la description de ce que le robot va taper sur le clavier
 

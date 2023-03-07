@@ -1,6 +1,8 @@
 import socket
 import threading
 import tkinter
+import XmlManager
+import xml.etree.ElementTree as ET
 
 class Server(threading.Thread):
 
@@ -45,6 +47,7 @@ class ReceiveThread(threading.Thread):
             self.data_received = self.clientsocket.recv(1024)
             with open("input.xml","w") as f:
                 f.write(bytes.decode(self.data_received))
+            Conversation.Response()
 
 
     def put_data_in_cache(self): # cette méthode servira à mettre les info que le kuka nous envoie dans un cache (qui pourra être lu par la suite)
@@ -57,13 +60,19 @@ class ReceiveThread(threading.Thread):
 class SendData():
     clientsocket = "" # cette objet va contenir le socket et u qu'il est utilisé qu'une seule fois, je la met en static
 
-    def Send(self):
-        self.clientsocket.sendall(b'hello')
+    def Send():
+
+        DataToSend = ""
+
+        with open('output.xml','r') as f:
+            DataToSend = f.read()
+
+        SendData.clientsocket.sendall(DataToSend.encode('utf-8'))
 
 # endregion
 
 
-class graphical_part:
+class GUI:
     def __init__(self):
         self.root = tkinter.Tk()
         self.root.title("Menu")
@@ -108,9 +117,41 @@ class graphical_part:
 
         #endregion
 
+class Conversation():
+    @staticmethod
+    def Response():
+        try:
+            tree = ET.parse("input.xml") # je parse le fichier xml
+            root = tree.getroot() # je prend la balise root du fichier
+
+            ipoc_balise = "" # cette variable va contenir le timestamps que je devrais renvoyé au kuka
+            for element in root: #pour chaque élement de la balise root, si le tag est IPOC alors je prend ce que contient la balise IPOC
+                if element.tag == "IPOC":
+                    ipoc_balise = element
+
+            Data = { # j'initialise le dictionnaire de donnée à envoyé au robot, ATTENTION 
+                "X" : "448.29",
+                "Y" : "-256.44",
+                "Z" : "645.70", 
+                "A" : "154.15",
+                "B" : "54.92",
+                "C" : "-176.97",
+                "IPOC" : ipoc_balise.text
+            }
+
+            XmlManager.XmlManager.SetDataToSend(Data)
+
+            SendData.Send()
+            
+        except:
+            print('une erreur de lecture est survenu je répondrai à la prochaine réception')
 
 
 server = Server()
 server.start()
 
-# graphical_part()
+
+# with open('output.xml','r') as f:
+#     string_DataToSend = f.read()
+#     byte_DataToSend = string_DataToSend
+#     print("kffkf")
