@@ -38,9 +38,7 @@ class MovementManager:
             except:
                 pass # si une erreur survient, je décide de ne rien faire
             
-        MovementManager.PositionToReach = Dictionnarie.Dico["h"]
 
 
-
-MovementManager.SetPositionsToReach(TopicTweet.get_data_for_tweet.get_data_in_variable("basic")["Description"])
-Pos = MovementManager.PositionToReach
+# MovementManager.SetPositionsToReach(TopicTweet.get_data_for_tweet.get_data_in_variable("basic")["Description"])
+# Pos = MovementManager.PositionToReach

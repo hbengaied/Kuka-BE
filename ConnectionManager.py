@@ -27,7 +27,12 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
 
             f.close() # je m'assure que le fichier est bien fermé et donc que l'écriture est terminé avant de commencer à répondre au robot
 
-            Conversation.Response() # c'est ici qu'il commence l'échange avec le kuka
+            Conversation.Response(MM.Dictionnarie.Dico["c"]["X"],
+            MM.Dictionnarie.Dico["c"]["Y"],
+            MM.Dictionnarie.Dico["c"]["Z"],
+            MM.Dictionnarie.Dico["c"]["A"],
+            MM.Dictionnarie.Dico["c"]["B"],
+            MM.Dictionnarie.Dico["c"]["C"]) # c'est ici qu'il commence l'échange avec le kuka
 
 class SendData():
     clientsocket = "" # cette objet va contenir le socket qui est utilisé qu'une seule fois, je la met en static
@@ -44,7 +49,7 @@ class SendData():
 
 class Conversation():
     @staticmethod
-    def Response():
+    def Response(PosX,PosY,PosZ,PosA,PosB,PosC):
         try:
             tree = ET.parse("input.xml") # je parse le fichier xml
             root = tree.getroot() # je prend la balise root du fichier
@@ -55,12 +60,12 @@ class Conversation():
                     ipoc_balise = element
 
             Data = { # j'initialise le dictionnaire de donnée à envoyé au robot, ATTENTION 
-                "X" : MM.Dictionnarie.Dico["h"]["X"],
-                "Y" : MM.Dictionnarie.Dico["h"]["y"],
-                "Z" : "130.31", 
-                "A" : "-178.82",
-                "B" : "56.22",
-                "C" : "-179.65",
+                "X" : PosX,
+                "Y" : PosY,
+                "Z" : PosZ, 
+                "A" : PosA,
+                "B" : PosB,
+                "C" : PosC,
                 "IPOC" : ipoc_balise.text
             }
 
