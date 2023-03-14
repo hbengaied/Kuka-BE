@@ -1,80 +1,10 @@
-import socket
-import threading
 import tkinter
-import XmlManager
-import xml.etree.ElementTree as ET
-
-class Server(threading.Thread):
-
-    kuka_connected = False
-
-    def __init__(self):
-        threading.Thread.__init__(self)
-
-    def run(self):
-        self.tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.tcpsock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
-        self.tcpsock.bind(("172.30.5.100",1234))
-
-        while True:
-            if self.tcpsock.listen: # si le serveur est en train d'écouté alors il peut prendre un port et accepté des client
-                self.tcpsock.listen(10)
-                print( "En écoute...")
-                (clientsocket, (ip, port)) = self.tcpsock.accept() # la méthode accept est une méthode (synchrone) qui va permettre d'accepter les client
-                newthread = ReceiveThread(ip, port, clientsocket)
-                newthread.start()
-                SendData.clientsocket = clientsocket # je définie le socket utilisé pour parler avec le robot
-
-            else: # sinon on sort de la boucle
-                break
-
-# region thread qui va permettre de gérer la communication avec le robot
-class ReceiveThread(threading.Thread):
-
-    def __init__(self, ip, port, clientsocket):
-        threading.Thread.__init__(self)
-        self.ip = ip
-        self.port = port
-        self.clientsocket = clientsocket
 
 
-    def run(self): # cette fonction est appelé lorsque kuka a réussi à se connecter
-   
-        print("Connexion réussi")
-
-        # je vais commencer à attendre la réception de donnée
-        while True:
-            self.data_received = self.clientsocket.recv(1024)
-
-            f = open("input.xml","w")
-
-            f.write(bytes.decode(self.data_received))
-
-            f.close() # je m'assure que le fichier est bien fermé et donc que l'écriture est terminé avant de commencer à répondre au robot
-
-            Conversation.Response()
-
-
-    def put_data_in_cache(self): # cette méthode servira à mettre les info que le kuka nous envoie dans un cache (qui pourra être lu par la suite)
-        pass
-
-    def send_data_to_kuka(self): # méthode qui va envoyé les donnée au robot 
-        pass
-
-
-class SendData():
-    clientsocket = "" # cette objet va contenir le socket et u qu'il est utilisé qu'une seule fois, je la met en static
-
-    def Send():
-
-        DataToSend = ""
-
-        with open('output.xml','r') as f:
-            DataToSend = f.read()
-
-        SendData.clientsocket.sendall(DataToSend.encode('utf-8'))
-
-# endregion
+import Server as Serv
+import ConnectionManager as CM
+import TopicTweet
+import MovementManager
 
 
 class GUI:
@@ -122,42 +52,16 @@ class GUI:
 
         #endregion
 
-class Conversation():
-    @staticmethod
-    def Response():
-        try:
-            tree = ET.parse("input.xml") # je parse le fichier xml
-            root = tree.getroot() # je prend la balise root du fichier
 
-            ipoc_balise = "" # cette variable va contenir le timestamps que je devrais renvoyé au kuka
-            for element in root: #pour chaque élement de la balise root, si le tag est IPOC alors je prend ce que contient la balise IPOC
-                if element.tag == "IPOC":
-                    ipoc_balise = element
+if __name__ == "__main__":
+    server = Serv.Server(ipServer="0.0.0.0" , portServer=1234) # j'instancie le server qui va écouté
+    server.start() # je lance le serveur
+    # Si le serveur détecte une nouvelle connection du robot alors je doit commencer la réception de paquet
+    
+    while(server.kuka_connected == False): # j'attent que le robot soit connecter
+        pass
+    # lorsque le kuka se connecte il sort de cette boucle et j'instancie la réception de paquet du kuka
 
-            Data = { # j'initialise le dictionnaire de donnée à envoyé au robot, ATTENTION 
-                "X" : "448.29",
-                "Y" : "-256.44",
-                "Z" : "645.70", 
-                "A" : "154.15",
-                "B" : "54.92",
-                "C" : "-176.97",
-                "IPOC" : ipoc_balise.text
-            }
-
-            XmlManager.XmlManager.SetDataToSend(Data)
-
-            SendData.Send()
-            
-        except:
-            print('une erreur de lecture est survenu je répondrai à la prochaine réception')
-
-
-
-server = Server()
-server.start()
-
-
-# with open('output.xml','r') as f:
-#     string_DataToSend = f.read()
-#     byte_DataToSend = string_DataToSend
-#     print("kffkf")
+    newthread = CM.ReceiveThread(server.ipKuka, server.portKuka, server.KukaSocket)
+    newthread.start()
+    CM.SendData.clientsocket = server.KukaSocket # je définie le socket utilisé pour parler avec le robot
