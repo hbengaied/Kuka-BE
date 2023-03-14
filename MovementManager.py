@@ -3,27 +3,29 @@ import TopicTweet
 class Dictionnarie: # cette classe ne va contenir juste les positions de chaque caractère utilisé
     Dico = {
         "h" : {
-            "X":54,
-            "Y":400,
-            "Z":400,
-            "A":52,
-            "B":44,
-            "C":5
-        }
+            "X" : "771.93",
+            "Y" : "-2.63",
+            "Z" : "130.31", 
+            "A" : "-178.82",
+            "B" : "56.22",
+            "C" : "-179.65",
+        },
+        "c" : {
+            "X" : "512.75",
+            "Y" : "120.31",
+            "Z" : "460.84", 
+            "A" : "-170.76",
+            "B" : "-4.22",
+            "C" : "164.84",
+        },
+
     }
 
 class MovementManager:
     # cette classe va gérer les mouvements du robot
     # Donc elle pourra savoir si la position a été atteinte ou non
-    # elle pourra donner la nouvelle position à atteindre
-    PositionToReach = { # les valeurs par défaut sont mis aléatoirement par MOI
-        "X":500,
-        "Y":400,
-        "Z":400,
-        "A":52,
-        "B":44,
-        "C":5
-    }
+    # elle pourra donner la nouvelle position à atteindreµ
+    
 
     PositionToReached = False # cete variable me servira à dire si le robot à atteint sa cible pas
 

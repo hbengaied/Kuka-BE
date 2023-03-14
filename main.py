@@ -54,7 +54,7 @@ class GUI:
 
 
 if __name__ == "__main__":
-    server = Serv.Server(ipServer="0.0.0.0" , portServer=1234) # j'instancie le server qui va écouté
+    server = Serv.Server(ipServer="172.30.5.100" , portServer=1234) # j'instancie le server qui va écouté
     server.start() # je lance le serveur
     # Si le serveur détecte une nouvelle connection du robot alors je doit commencer la réception de paquet
     
@@ -65,3 +65,7 @@ if __name__ == "__main__":
     newthread = CM.ReceiveThread(server.ipKuka, server.portKuka, server.KukaSocket)
     newthread.start()
     CM.SendData.clientsocket = server.KukaSocket # je définie le socket utilisé pour parler avec le robot
+
+    # par la suite, il y aura une classe qui :
+    #   - va vérifier la localisation du robot
+    #   - va pouvoir dire la prochaine localisation à atteindre (donc faut que l'xml output change)

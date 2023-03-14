@@ -2,7 +2,7 @@ import socket
 import threading
 import xml.etree.ElementTree as ET
 import XmlManager
-
+import MovementManager as MM
 
 class ReceiveThread(threading.Thread): # cette classe servira principalement à la reception de paquet et lorsqu'il recoit qqu chose alors il commence la conversation avec le kuka
 
@@ -55,12 +55,12 @@ class Conversation():
                     ipoc_balise = element
 
             Data = { # j'initialise le dictionnaire de donnée à envoyé au robot, ATTENTION 
-                "X" : "400",
-                "Y" : "0",
-                "Z" : "500", 
-                "A" : "180",
-                "B" : "50",
-                "C" : "180",
+                "X" : MM.Dictionnarie.Dico["h"]["X"],
+                "Y" : "-2.63",
+                "Z" : "130.31", 
+                "A" : "-178.82",
+                "B" : "56.22",
+                "C" : "-179.65",
                 "IPOC" : ipoc_balise.text
             }
 
