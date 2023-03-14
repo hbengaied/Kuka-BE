@@ -56,7 +56,7 @@ class Conversation():
 
             Data = { # j'initialise le dictionnaire de donnée à envoyé au robot, ATTENTION 
                 "X" : MM.Dictionnarie.Dico["h"]["X"],
-                "Y" : "-2.63",
+                "Y" : MM.Dictionnarie.Dico["h"]["y"],
                 "Z" : "130.31", 
                 "A" : "-178.82",
                 "B" : "56.22",
