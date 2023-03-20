@@ -27,27 +27,13 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
 
             f.close() # je m'assure que le fichier est bien fermé et donc que l'écriture est terminé avant de commencer à répondre au robot
 
-            #Ici j'envoi la position qu'on veut atteindre
-            Conversation.Response(MM.Dictionnarie.Dico["c"]["X"],
-            MM.Dictionnarie.Dico["c"]["Y"],
-            MM.Dictionnarie.Dico["c"]["Z"],
-            MM.Dictionnarie.Dico["c"]["A"],
-            MM.Dictionnarie.Dico["c"]["B"],
-            MM.Dictionnarie.Dico["c"]["C"]) # c'est ici qu'il commence l'échange avec le kuka
-
-            arrive = False
-            while arrive == False :
-                arrive = Verification.Verif(MM.Dictionnarie.Dico["c"]["X"],
-                MM.Dictionnarie.Dico["c"]["Y"],
-                MM.Dictionnarie.Dico["c"]["Z"],
-                MM.Dictionnarie.Dico["c"]["A"],
-                MM.Dictionnarie.Dico["c"]["B"],
-                MM.Dictionnarie.Dico["c"]["C"])
-            #Il printe pas c'est normal, je dois faire à o,2 pres
-            print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!JE SUIS ARRIVE A LA POSITION DEMANDE !!!!!!!!!!!!!!!!!!!!!!!!")
-
-            #Faire une boucle while qui va check si on y est enfin 
-            #Print un Ok on y est quand c'est le cas pour le test
+            Conversation.Response(MM.Dictionnarie.Dico["h"]["X"],
+            MM.Dictionnarie.Dico["h"]["Y"],
+            MM.Dictionnarie.Dico["h"]["Z"],
+            MM.Dictionnarie.Dico["h"]["A"],
+            MM.Dictionnarie.Dico["h"]["B"],
+            MM.Dictionnarie.Dico["h"]["C"]) # c'est ici qu'il commence l'échange avec le kuka
+            Verification.Verif()
 
 class SendData():
     clientsocket = "" # cette objet va contenir le socket qui est utilisé qu'une seule fois, je la met en static
@@ -91,31 +77,30 @@ class Conversation():
         except:
             print('une erreur de lecture est survenu je répondrai à la prochaine réception')
 
+
 class Verification():
     @staticmethod
-    def Verif(PosX,PosY,PosZ,PosA,PosB,PosC):
-        TreeVerif = ET.parse("output.xml")
-        root = TreeVerif.getroot()
+    def Verif():
+        try:
+            # parse the XML file
+            tree = ET.parse('input.xml')
 
-        rist_element = root.find('RIst')
-        x, y, z, a, b, c = None, None, None, None, None, None
-        if rist_element is not None:
-            x = float(rist_element.attrib['X'])
-            y = float(rist_element.attrib['Y'])
-            z = float(rist_element.attrib['Z'])
-            a = float(rist_element.attrib['A'])
-            b = float(rist_element.attrib['B'])
-            c = float(rist_element.attrib['C'])
-            # instructions à exécuter si l'élément est trouvé
-        else:
-            pass
-        
-        #CONVERTIR POS ET CE QUE LE ROBOT ENVOI EN FLOAT, FAIRE SOUSTRACTION ET METTRE UNE MARGE D'erreur a 0,02
-        print("La valeur de X ou se trouve le robot",x)
-        if x == PosX and y == PosY and z == PosZ and a ==PosA and b == PosB and c == PosC:
-            return True
-        return False
+            # get the root element of the XML file
+            root = tree.getroot()
 
-
-
-
+            # get the values of X, Y, Z, A, B, C from the RIst element
+            rist = root.find('RIst')
+            x = float(rist.get('X'))
+            y = float(rist.get('Y'))
+            z = float(rist.get('Z'))
+            a = float(rist.get('A'))
+            b = float(rist.get('B'))
+            c = float(rist.get('C'))
+            print("X:", x)
+            print("Y:", y)
+            print("Z:", z)
+            print("A:", a)
+            print("B:", b)
+            print("C:", c)
+        except:
+            print(' ')
