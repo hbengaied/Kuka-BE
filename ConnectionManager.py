@@ -11,7 +11,7 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
         self.ip = ipclient
         self.port = portClient
         self.clientsocket = clientsocket
-        MM.Phrase.Initialisation("hchchc")
+        MM.Phrase.Initialisation("zbch")
 
 
     def run(self): # cette fonction est appelé lorsque kuka a réussi à se connecter
@@ -27,16 +27,19 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
             f.write(bytes.decode(self.data_received))
 
             f.close() # je m'assure que le fichier est bien fermé et donc que l'écriture est terminé avant de commencer à répondre au robot
-            # print("La lettre est : ", MM.Phrase.MyText[MM.Phrase.Compteur])
-            # print("Et le compteur est de taille :", MM.Phrase.Compteur)
 
             Conversation.Response(MM.Phrase.MyText[MM.Phrase.Compteur]) # c'est ici qu'il commence l'échange avec le kuka
 
             check = Verification.Verif(MM.Phrase.MyText[MM.Phrase.Compteur])
             if check == True :
                 print("++++++++++++++++++++++++++++++++Je suis dans arrivé ou je voulais++++++++++++++++++++++++++++++++++++++++")
+                print("Jai pu cliquer sur la touche :", MM.Phrase.MyText[MM.Phrase.Compteur])
+
                 #Je vais passer caractere suivant
                 MM.Phrase.Compteur = MM.Phrase.Compteur +1
+                if MM.Phrase.Compteur == MM.Phrase.TaillePhrase:
+                    print("On recommence le mot pcq on vient d'arriver à la fin pour eviter le bug ! Merci de mettre une version plus propre pour gerer ce cas")
+                    MM.Phrase.Compteur = 0
                 check = False
 
 
@@ -75,21 +78,13 @@ class Conversation():
                 "C" : MM.Dictionnarie.Dico[lettre]["C"],
                 "IPOC" : ipoc_balise.text
             }
-            print("------------------++++-------------------")
-            print(MM.Dictionnarie.Dico[lettre]["X"])
-            print(MM.Dictionnarie.Dico[lettre]["Y"])
-            print(MM.Dictionnarie.Dico[lettre]["Z"])
-            print(MM.Dictionnarie.Dico[lettre]["A"])
-            print(MM.Dictionnarie.Dico[lettre]["B"])
-            print(MM.Dictionnarie.Dico[lettre]["C"])
-            print("--------------------------------------")
 
             XmlManager.XmlManager.SetDataToSend(Data) # cette fonction sert à initialisé le fichier xml "output.xml"
 
             SendData.Send() # et juste aprés, il envoie le fichier xml
             
         except:
-            print('une erreur de lecture est survenu je répondrai à la prochaine réception')
+            pass
 
 
 class Verification():
@@ -117,14 +112,8 @@ class Verification():
             PosA = float(MM.Dictionnarie.Dico[lettre]["A"])
             PosB = float(MM.Dictionnarie.Dico[lettre]["B"])
             PosC = float(MM.Dictionnarie.Dico[lettre]["C"])
-            if abs(PosX-x) <0.1 and abs(PosY-y) <0.1 and abs(PosZ-z)<0.1 :
-                # print("X:", x)
-                # print("Y:", y)
-                # print("Z:", z)
-                # print("A:", a)
-                # print("B:", b)
-                # print("C:", c)
+            if abs(PosX-x) <0.3 and abs(PosY-y) <0.3 and abs(PosZ-z)<0.3 :
                 return True
         except:
-            print(' ')
+            pass
         return False
