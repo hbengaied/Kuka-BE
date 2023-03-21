@@ -11,6 +11,7 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
         self.ip = ipclient
         self.port = portClient
         self.clientsocket = clientsocket
+        MM.Phrase.Initialisation("hchchc")
 
 
     def run(self): # cette fonction est appelé lorsque kuka a réussi à se connecter
@@ -26,29 +27,23 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
             f.write(bytes.decode(self.data_received))
 
             f.close() # je m'assure que le fichier est bien fermé et donc que l'écriture est terminé avant de commencer à répondre au robot
+            # print("La lettre est : ", MM.Phrase.MyText[MM.Phrase.Compteur])
+            # print("Et le compteur est de taille :", MM.Phrase.Compteur)
 
-            Conversation.Response(MM.Dictionnarie.Dico["h"]["X"],
-            MM.Dictionnarie.Dico["h"]["Y"],
-            MM.Dictionnarie.Dico["h"]["Z"],
-            MM.Dictionnarie.Dico["h"]["A"],
-            MM.Dictionnarie.Dico["h"]["B"],
-            MM.Dictionnarie.Dico["h"]["C"]) # c'est ici qu'il commence l'échange avec le kuka
+            Conversation.Response(MM.Phrase.MyText[MM.Phrase.Compteur]) # c'est ici qu'il commence l'échange avec le kuka
 
-            check = Verification.Verif(MM.Dictionnarie.Dico["c"]["X"],
-            MM.Dictionnarie.Dico["h"]["Y"],
-            MM.Dictionnarie.Dico["h"]["Z"],
-            MM.Dictionnarie.Dico["h"]["A"],
-            MM.Dictionnarie.Dico["h"]["B"],
-            MM.Dictionnarie.Dico["h"]["C"])
+            check = Verification.Verif(MM.Phrase.MyText[MM.Phrase.Compteur])
             if check == True :
-                print("Je suis dans arrivé ou je voulais")
+                print("++++++++++++++++++++++++++++++++Je suis dans arrivé ou je voulais++++++++++++++++++++++++++++++++++++++++")
                 #Je vais passer caractere suivant
+                MM.Phrase.Compteur = MM.Phrase.Compteur +1
                 check = False
+
+
 
 
 class SendData():
     clientsocket = "" # cette objet va contenir le socket qui est utilisé qu'une seule fois, je la met en static
-
     def Send():
 
         DataToSend = ""
@@ -61,7 +56,7 @@ class SendData():
 
 class Conversation():
     @staticmethod
-    def Response(PosX,PosY,PosZ,PosA,PosB,PosC):
+    def Response(lettre):
         try:
             tree = ET.parse("input.xml") # je parse le fichier xml
             root = tree.getroot() # je prend la balise root du fichier
@@ -72,14 +67,22 @@ class Conversation():
                     ipoc_balise = element
 
             Data = { # j'initialise le dictionnaire de donnée à envoyé au robot, ATTENTION 
-                "X" : PosX,
-                "Y" : PosY,
-                "Z" : PosZ, 
-                "A" : PosA,
-                "B" : PosB,
-                "C" : PosC,
+                "X" : MM.Dictionnarie.Dico[lettre]["X"],
+                "Y" : MM.Dictionnarie.Dico[lettre]["Y"],
+                "Z" : MM.Dictionnarie.Dico[lettre]["Z"], 
+                "A" : MM.Dictionnarie.Dico[lettre]["A"],
+                "B" : MM.Dictionnarie.Dico[lettre]["B"],
+                "C" : MM.Dictionnarie.Dico[lettre]["C"],
                 "IPOC" : ipoc_balise.text
             }
+            print("------------------++++-------------------")
+            print(MM.Dictionnarie.Dico[lettre]["X"])
+            print(MM.Dictionnarie.Dico[lettre]["Y"])
+            print(MM.Dictionnarie.Dico[lettre]["Z"])
+            print(MM.Dictionnarie.Dico[lettre]["A"])
+            print(MM.Dictionnarie.Dico[lettre]["B"])
+            print(MM.Dictionnarie.Dico[lettre]["C"])
+            print("--------------------------------------")
 
             XmlManager.XmlManager.SetDataToSend(Data) # cette fonction sert à initialisé le fichier xml "output.xml"
 
@@ -91,7 +94,7 @@ class Conversation():
 
 class Verification():
     @staticmethod
-    def Verif(PosX,PosY,PosZ,PosA,PosB,PosC):
+    def Verif(lettre):
         try:
             # parse the XML file
             tree = ET.parse('input.xml')
@@ -107,13 +110,20 @@ class Verification():
             a = float(rist.get('A'))
             b = float(rist.get('B'))
             c = float(rist.get('C'))
-            if abs(float(PosX)-x) <0.03 and abs(float(PosY)-y) <0.03 and abs(float(PosZ)-z)<0.03 :
-                print("X:", x)
-                print("Y:", y)
-                print("Z:", z)
-                print("A:", a)
-                print("B:", b)
-                print("C:", c)
+
+            PosX = float(MM.Dictionnarie.Dico[lettre]["X"])
+            PosY = float(MM.Dictionnarie.Dico[lettre]["Y"])
+            PosZ = float(MM.Dictionnarie.Dico[lettre]["Z"])
+            PosA = float(MM.Dictionnarie.Dico[lettre]["A"])
+            PosB = float(MM.Dictionnarie.Dico[lettre]["B"])
+            PosC = float(MM.Dictionnarie.Dico[lettre]["C"])
+            if abs(PosX-x) <0.1 and abs(PosY-y) <0.1 and abs(PosZ-z)<0.1 :
+                # print("X:", x)
+                # print("Y:", y)
+                # print("Z:", z)
+                # print("A:", a)
+                # print("B:", b)
+                # print("C:", c)
                 return True
         except:
             print(' ')

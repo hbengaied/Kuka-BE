@@ -3,14 +3,22 @@ import TopicTweet
 class Dictionnarie: # cette classe ne va contenir juste les positions de chaque caractère utilisé
     Dico = {
         "h" : {
-            "X" : "771.93",
-            "Y" : "-2.63",
-            "Z" : "130.31", 
-            "A" : "-178.82",
-            "B" : "56.22",
-            "C" : "-179.65",
+            "X" : "682.14",
+            "Y" : "0.84",
+            "Z" : "645.17", 
+            "A" : "-175.98",
+            "B" : "54.93",
+            "C" : "-176.97",
         },
         "c" : {
+            "X" : "682.14",
+            "Y" : "0.84",
+            "Z" : "545.17", 
+            "A" : "-175.98",
+            "B" : "54.93",
+            "C" : "-176.97",
+        },
+        "b" : {
             "X" : "512.75",
             "Y" : "120.31",
             "Z" : "460.84", 
@@ -20,6 +28,15 @@ class Dictionnarie: # cette classe ne va contenir juste les positions de chaque 
         },
 
     }
+
+class Phrase:
+    MyText = ""
+    Compteur = 0
+    TaillePhrase = 0
+    def Initialisation(MaPhrase):
+        Phrase.MyText = MaPhrase
+        Phrase.Compteur = 0
+        Phrase.TaillePhrase = len(Phrase.MyText)
 
 class MovementManager:
     # cette classe va gérer les mouvements du robot
