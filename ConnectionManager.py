@@ -33,7 +33,18 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
             MM.Dictionnarie.Dico["h"]["A"],
             MM.Dictionnarie.Dico["h"]["B"],
             MM.Dictionnarie.Dico["h"]["C"]) # c'est ici qu'il commence l'échange avec le kuka
-            Verification.Verif()
+
+            check = Verification.Verif(MM.Dictionnarie.Dico["c"]["X"],
+            MM.Dictionnarie.Dico["h"]["Y"],
+            MM.Dictionnarie.Dico["h"]["Z"],
+            MM.Dictionnarie.Dico["h"]["A"],
+            MM.Dictionnarie.Dico["h"]["B"],
+            MM.Dictionnarie.Dico["h"]["C"])
+            if check == True :
+                print("Je suis dans arrivé ou je voulais")
+                #Je vais passer caractere suivant
+                check = False
+
 
 class SendData():
     clientsocket = "" # cette objet va contenir le socket qui est utilisé qu'une seule fois, je la met en static
@@ -80,7 +91,7 @@ class Conversation():
 
 class Verification():
     @staticmethod
-    def Verif():
+    def Verif(PosX,PosY,PosZ,PosA,PosB,PosC):
         try:
             # parse the XML file
             tree = ET.parse('input.xml')
@@ -96,11 +107,14 @@ class Verification():
             a = float(rist.get('A'))
             b = float(rist.get('B'))
             c = float(rist.get('C'))
-            print("X:", x)
-            print("Y:", y)
-            print("Z:", z)
-            print("A:", a)
-            print("B:", b)
-            print("C:", c)
+            if abs(float(PosX)-x) <0.03 and abs(float(PosY)-y) <0.03 and abs(float(PosZ)-z)<0.03 :
+                print("X:", x)
+                print("Y:", y)
+                print("Z:", z)
+                print("A:", a)
+                print("B:", b)
+                print("C:", c)
+                return True
         except:
             print(' ')
+        return False
