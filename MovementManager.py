@@ -27,8 +27,10 @@ class MovementManager:
     # elle pourra donner la nouvelle position à atteindreµ
     
 
-    PositionToReached = False # cete variable me servira à dire si le robot à atteint sa cible pas
+    PositionReached = False # cete variable me servira à dire si le robot à atteint sa cible pas
 
+    PositionToReach = {}
+    
     def SetPositionsToReach(ArrayOfElement):
 
         firstelement = ""
