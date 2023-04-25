@@ -1,12 +1,21 @@
 import xml.etree.ElementTree as ET
 import TopicTweet
-
+import os
 class XmlManager:
-
     @staticmethod
     def SetDataReceived(DataToPut): # le paramétre DataToPut contient l'xml envoyé par le robot
         with open("input.xml","w") as f:
             f.write(DataToPut)
+
+    def DeleteFile():
+        chemin_fichier = "output.xml"
+        # Vérifier si le fichier existe 
+        if os.path.exists(chemin_fichier):
+        # Supprimer le fichier
+            os.remove(chemin_fichier)
+            print("Le fichier a été supprimé avec succès.")
+        else:
+            print("Le fichier n'existe pas.")
 
     def GetData(): # cette méthode va me permettre d'obtenir les données du fichier xml
 
@@ -27,7 +36,6 @@ class XmlManager:
 
     @staticmethod
     def SetDataToSend(Data): # Data est un dictionnaire qui va contenir tous ce que xml doit contenir 
-
 
         # Dans notre cas, les données à envoyé sont les 6 information => X,Y,Z,A,B,C
 
