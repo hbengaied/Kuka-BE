@@ -11,7 +11,7 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
         self.ip = ipclient
         self.port = portClient
         self.clientsocket = clientsocket
-        MM.Phrase.Initialisation("salut yousri le bg")
+        MM.Phrase.Initialisation("w x c v b n ")
 
 
     def run(self): # cette fonction est appelé lorsque kuka a réussi à se connecter
@@ -32,7 +32,6 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
                 MM.Phrase.Check = Verification.Verif(MM.Phrase.MyText[MM.Phrase.Compteur])
 
             if MM.Phrase.Check == True :
-                print("++++++++++++++++++++++++++++++++OUAIS MA CITEEEEEEEEEEEEEEEEEEEEE++++++++++++++++++++++++++++++++++++++++")
                 print("Jai pu cliquer sur la touche :", MM.Phrase.MyText[MM.Phrase.Compteur])
 
                 #Ici lorsque la lettre voulu a été atteinte, on va relever l'outil de +150 en Z
@@ -138,7 +137,7 @@ class ConversationGoUp():
             for element in root: #pour chaque élement de la balise root, si le tag est IPOC alors je prend ce que contient la balise IPOC
                 if element.tag == "IPOC":
                     ipoc_balise = element
-            PosZ = float(MM.Dictionnarie.Dico[lettre]["Z"]) + 75
+            PosZ = float(MM.Dictionnarie.Dico[lettre]["Z"]) + 150
             StringPosZ = str(PosZ)
             Data = { # j'initialise le dictionnaire de donnée à envoyé au robot, ATTENTION 
                 "X" : MM.Dictionnarie.Dico[lettre]["X"],
@@ -179,7 +178,7 @@ class GoUp():
 
             PosX = float(MM.Dictionnarie.Dico[lettre]["X"])
             PosY = float(MM.Dictionnarie.Dico[lettre]["Y"])
-            PosZ = float(MM.Dictionnarie.Dico[lettre]["Z"]) + 75
+            PosZ = float(MM.Dictionnarie.Dico[lettre]["Z"]) + 150
             PosA = float(MM.Dictionnarie.Dico[lettre]["A"])
             PosB = float(MM.Dictionnarie.Dico[lettre]["B"])
             PosC = float(MM.Dictionnarie.Dico[lettre]["C"])
