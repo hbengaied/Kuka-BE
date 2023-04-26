@@ -5,7 +5,7 @@ class Dictionnarie: # cette classe ne va contenir juste les positions de chaque 
         "a" : {
             "X" : "667.08",
             "Y" : "170.97",
-            "Z" : "294.42", 
+            "Z" : "295.42", 
             "A" : "172.07",
             "B" : "-0.09",
             "C" : "179.75",
