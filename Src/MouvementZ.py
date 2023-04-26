@@ -1,6 +1,7 @@
 import MovementManager as MM
 import ConnectionManager as CM
 import xml.etree.ElementTree as ET
+import XmlManager
 
 class MoveMyZ():
     @staticmethod
@@ -40,7 +41,7 @@ class MoveMyZ():
             for element in root: #pour chaque élement de la balise root, si le tag est IPOC alors je prend ce que contient la balise IPOC
                 if element.tag == "IPOC":
                     ipoc_balise = element
-            PosZ = float(MM.Dictionnarie.Dico[lettre]["Z"]) + 75
+            PosZ = float(MM.Dictionnarie.Dico[lettre]["Z"]) + 35
             StringPosZ = str(PosZ)
             Data = { # j'initialise le dictionnaire de donnée à envoyé au robot, ATTENTION 
                 "X" : MM.Dictionnarie.Dico[lettre]["X"],

@@ -81,7 +81,7 @@ class Verification():
 
             PosX = float(MM.Dictionnarie.Dico[lettre]["X"])
             PosY = float(MM.Dictionnarie.Dico[lettre]["Y"])
-            PosZ = float(MM.Dictionnarie.Dico[lettre]["Z"]) + 75
+            PosZ = float(MM.Dictionnarie.Dico[lettre]["Z"]) + 35
             PosA = float(MM.Dictionnarie.Dico[lettre]["A"])
             PosB = float(MM.Dictionnarie.Dico[lettre]["B"])
             PosC = float(MM.Dictionnarie.Dico[lettre]["C"])

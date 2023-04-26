@@ -14,7 +14,7 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
         self.ip = ipclient
         self.port = portClient
         self.clientsocket = clientsocket
-        MM.Phrase.Initialisation("hello je suis kuka")
+        MM.Phrase.Initialisation("kuka")
 
     def run(self): # cette fonction est appelé lorsque kuka a réussi à se connecter
         print("Connexion réussi")
@@ -32,31 +32,33 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
                 MM.Phrase.Check = VD.Verification.VerifXandY(MM.Phrase.MyText[MM.Phrase.Compteur])
             
             #Si le robot à atteint le x et y voulu on va cliquer sur la touche en bougeant le z
-            if MM.Phrase.Check == True :
-                #Deplacement du robot en Z uniquement 
+            if MM.Phrase.Check == True  and MM.Phrase.CheckDown == False :
+                #Deplacement du robot en Z uniquement
+                print("Je descend !!!")
                 MZ.MoveMyZ.MoveZDown(MM.Phrase.MyText[MM.Phrase.Compteur])
                 MM.Phrase.CheckDown = VD.Verification.VerifKeyClicked(MM.Phrase.MyText[MM.Phrase.Compteur])
-                if MM.Phrase.CheckDown == True :
-                    print("Jai pu cliquer sur la touche :", MM.Phrase.MyText[MM.Phrase.Compteur])
 
-                    #Ici lorsque la lettre voulu a été cliqué, on va relever l'outil de +75 en Z
-                    if MM.Phrase.CheckDown == True and MM.Phrase.CheckUp == False :
-                        MZ.MoveMyZ.MoveZUp(MM.Phrase.MyText[MM.Phrase.Compteur])
-                        MM.Phrase.CheckUp = VD.Verification.VerifGoUp(MM.Phrase.MyText[MM.Phrase.Compteur])
-
+            if MM.Phrase.CheckDown == True and MM.Phrase.CheckUp == False :
+                # print("Jai pu cliquer sur la touche :", MM.Phrase.MyText[MM.Phrase.Compteur])
+                #Ici lorsque la lettre voulu a été cliqué, on va relever l'outil de +75 en Z
+                MZ.MoveMyZ.MoveZUp(MM.Phrase.MyText[MM.Phrase.Compteur])
+                MM.Phrase.CheckUp = VD.Verification.VerifGoUp(MM.Phrase.MyText[MM.Phrase.Compteur])
                     #Je vais passer caractere suivant
-                    if MM.Phrase.CheckUp == True and MM.Phrase.Check == True and MM.Phrase.CheckDown == True :
-                        MM.Phrase.Compteur = MM.Phrase.Compteur +1
-                        #Ca c'est juste pour eviter un depassement index quand on arrive fin du mot ! Faut impltementer un autre truc plus propre et plus pro 
-                        if MM.Phrase.Compteur == MM.Phrase.TaillePhrase:
-                            print("On recommence le mot pcq on vient d'arriver à la fin pour eviter le bug ! Merci de mettre une version plus propre pour gerer ce cas")
-                            MM.Phrase.Compteur = 0
-                        MM.Phrase.Check = False
-                        MM.Phrase.CheckUp = False
-                        MM.Phrase.CheckDown == False
+                
+            if MM.Phrase.CheckUp == True and MM.Phrase.Check == True and MM.Phrase.CheckDown == True :
+                print("On incremente le compteur ")
+                MM.Phrase.Compteur = MM.Phrase.Compteur +1
+                MM.Phrase.Check = False
+                MM.Phrase.CheckUp = False
+                MM.Phrase.CheckDown = False
+                #Ca c'est juste pour eviter un depassement index quand on arrive fin du mot ! Faut impltementer un autre truc plus propre et plus pro 
+                if MM.Phrase.Compteur == MM.Phrase.TaillePhrase:
+                    print("On recommence le mot pcq on vient d'arriver à la fin pour eviter le bug ! Merci de mettre une version plus propre pour gerer ce cas")
+                    MM.Phrase.Compteur = 0
 
 class SendData():
     clientsocket = "" # cette objet va contenir le socket qui est utilisé qu'une seule fois, je la met en static
+    @staticmethod
     def Send():
         DataToSend = ""
         with open('output.xml','r') as f:

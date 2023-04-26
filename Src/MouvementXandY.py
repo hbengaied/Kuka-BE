@@ -1,5 +1,7 @@
 import MovementManager as MM
 import ConnectionManager as CM
+import XmlManager
+import xml.etree.ElementTree as ET
 
 class MouveMyXandY():
     @staticmethod
@@ -13,7 +15,7 @@ class MouveMyXandY():
                 if element.tag == "IPOC":
                     ipoc_balise = element
             
-            PosZ = float(MM.Dictionnarie.Dico[lettre]["Z"]) + 75
+            PosZ = float(MM.Dictionnarie.Dico[lettre]["Z"]) + 35
             StringPosZ = str(PosZ)
             Data = { # j'initialise le dictionnaire de donnée à envoyé au robot, ATTENTION 
                 "X" : MM.Dictionnarie.Dico[lettre]["X"],
