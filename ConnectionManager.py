@@ -16,20 +16,15 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
         self.clientsocket = clientsocket
         MM.Phrase.Initialisation("hello je suis kuka")
 
-
     def run(self): # cette fonction est appelé lorsque kuka a réussi à se connecter
-   
         print("Connexion réussi")
-
         # je vais commencer à attendre la réception de donnée
         while True:
             self.data_received = self.clientsocket.recv(1024)
-
             f = open("input.xml","w")
-
             f.write(bytes.decode(self.data_received))
-
             f.close() # je m'assure que le fichier est bien fermé et donc que l'écriture est terminé avant de commencer à répondre au robot
+
             if MM.Phrase.Check == False :
                 #Je donne les coord au robot en x et y auquel il doit se deplacer
                 MXY.MouveMyXandY.MouveXandY(MM.Phrase.MyText[MM.Phrase.Compteur])
@@ -63,9 +58,7 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
 class SendData():
     clientsocket = "" # cette objet va contenir le socket qui est utilisé qu'une seule fois, je la met en static
     def Send():
-
         DataToSend = ""
-
         with open('output.xml','r') as f:
             DataToSend = f.read()
 
