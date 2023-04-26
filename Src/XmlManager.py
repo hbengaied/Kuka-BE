@@ -1,6 +1,7 @@
 import xml.etree.ElementTree as ET
 import TopicTweet
 import os
+
 class XmlManager:
     @staticmethod
     def SetDataReceived(DataToPut): # le paramétre DataToPut contient l'xml envoyé par le robot
