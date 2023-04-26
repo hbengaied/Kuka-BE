@@ -14,7 +14,7 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
         self.ip = ipclient
         self.port = portClient
         self.clientsocket = clientsocket
-        MM.Phrase.Initialisation("kuka")
+        MM.Phrase.Initialisation("hicheme ca va")
 
     def run(self): # cette fonction est appelé lorsque kuka a réussi à se connecter
         print("Connexion réussi")
