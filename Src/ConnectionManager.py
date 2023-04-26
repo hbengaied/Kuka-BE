@@ -21,7 +21,7 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
         # je vais commencer à attendre la réception de donnée
         while True:
             self.data_received = self.clientsocket.recv(1024)
-            f = open("../FileXml/input.xml","w")
+            f = open("input.xml","w")
             f.write(bytes.decode(self.data_received))
             f.close() # je m'assure que le fichier est bien fermé et donc que l'écriture est terminé avant de commencer à répondre au robot
 
@@ -59,7 +59,7 @@ class SendData():
     clientsocket = "" # cette objet va contenir le socket qui est utilisé qu'une seule fois, je la met en static
     def Send():
         DataToSend = ""
-        with open('../FileXml/output.xml','r') as f:
+        with open('output.xml','r') as f:
             DataToSend = f.read()
 
         SendData.clientsocket.sendall(DataToSend.encode('utf-8'))
