@@ -4,11 +4,11 @@ import os
 class XmlManager:
     @staticmethod
     def SetDataReceived(DataToPut): # le paramétre DataToPut contient l'xml envoyé par le robot
-        with open("input.xml","w") as f:
+        with open("../FileXml/input.xml","w") as f:
             f.write(DataToPut)
 
     def DeleteFile():
-        chemin_fichier = "output.xml"
+        chemin_fichier = "../FileXml/output.xml"
         # Vérifier si le fichier existe 
         if os.path.exists(chemin_fichier):
         # Supprimer le fichier
@@ -19,7 +19,7 @@ class XmlManager:
 
     def GetData(): # cette méthode va me permettre d'obtenir les données du fichier xml
 
-        Tree = ET.parse("input.xml")
+        Tree = ET.parse("../FileXml/input.xml")
         root = Tree.getroot()
 
         # les principales données qu'on aura besoin est la localisation donc je donne directement la position actuelle du robot
@@ -56,6 +56,6 @@ class XmlManager:
         TimeStamps = ET.SubElement(root , "IPOC").text = Data["IPOC"] # je crée la balise IPOC
         
         tree = ET.ElementTree(root)
-        tree.write("output.xml")
+        tree.write("../FileXml/output.xml")
 
 

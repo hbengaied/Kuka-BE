@@ -5,7 +5,7 @@ class MouveMyXandY():
     @staticmethod
     def MouveXandY(lettre):
         try:
-            tree = ET.parse("input.xml") # je parse le fichier xml
+            tree = ET.parse("../FileXml/input.xml") # je parse le fichier xml
             root = tree.getroot() # je prend la balise root du fichier
 
             ipoc_balise = "" # cette variable va contenir le timestamps que je devrais renvoyé au kuka

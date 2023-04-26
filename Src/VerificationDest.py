@@ -7,7 +7,7 @@ class Verification():
     def VerifXandY(lettre):
         try:
             # parse the XML file
-            tree = ET.parse('input.xml')
+            tree = ET.parse('../FileXml/input.xml')
 
             # get the root element of the XML file
             root = tree.getroot()
@@ -35,7 +35,7 @@ class Verification():
     def VerifKeyClicked(lettre):
         try:
         # parse the XML file
-            tree = ET.parse('input.xml')
+            tree = ET.parse('../FileXml/input.xml')
 
         # get the root element of the XML file
             root = tree.getroot()
@@ -65,7 +65,7 @@ class Verification():
     def VerifGoUp(lettre):
         try:
             # parse the XML file
-            tree = ET.parse('input.xml')
+            tree = ET.parse('../FileXml/input.xml')
 
             # get the root element of the XML file
             root = tree.getroot()
