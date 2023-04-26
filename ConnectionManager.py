@@ -60,7 +60,6 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
                         MM.Phrase.CheckUp = False
                         MM.Phrase.CheckDown == False
 
-
 class SendData():
     clientsocket = "" # cette objet va contenir le socket qui est utilisé qu'une seule fois, je la met en static
     def Send():
