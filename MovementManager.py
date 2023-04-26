@@ -252,6 +252,7 @@ class Phrase:
     TaillePhrase = 0
     Check = False
     CheckUp = False
+    CheckDown = False
     def Initialisation(MaPhrase):
         Phrase.MyText = MaPhrase
         Phrase.Compteur = 0
