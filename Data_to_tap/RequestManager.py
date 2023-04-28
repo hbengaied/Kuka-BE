@@ -3,6 +3,7 @@ import requests
 import pymongo
 import random 
 import json
+
 # OpenAIRequester permet d'initialisé les variables pour faire une requête openai et elle permet aussi de faire la requête à openai
 class OpenAIRequester:
     def __init__(self, key):
@@ -16,8 +17,27 @@ class OpenAIRequester:
             return response
         except Exception as e:
             print(f"Une erreur est survenue lors de la requête '{prompt}': {str(e)}")
-            print("\n je vais donc faire une requete à une api")
             return None
+
+    @staticmethod
+    def Update_Data_To_DB(url , data):
+        try:
+            client = pymongo.MongoClient(url)
+            db = client["DB_Bur_Etude"]
+            collection = db["collectionChatGPT"]
+            filter_query = {"Topic": "gpt"}
+            update_query = {"$set": {"Topic": "gpt", "Sentence": data}}
+            result = collection.update_one(filter_query, update_query, upsert=True)
+            if result.upserted_id is not None:
+                print("Nouveau document créé dans MongoDB")
+            else:
+                print("Document mis à jour dans MongoDB")
+        except Exception as e:
+            print(f"Une erreur est survenue lors de la mise à jour de MongoDB : {str(e)}")
+        finally:
+            client.close()
+
+        results = collection.insert_one(data)
 
 class PokeAPIRequester:
     def __init__(self):
@@ -54,22 +74,64 @@ class MongoDBUpdater:
         finally:
             client.close()
 
+class MongoDbGetData:
+    @staticmethod
+    def get_sentence_hello_world(url): # retourne la phrase basique que kuka doit écrire
+            client = pymongo.MongoClient(url)
+            db = client["DB_Bur_Etude"]
+            collection = db["collectionBasique"]
 
-openAIRequester = OpenAIRequester(key="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")
-response = openAIRequester.make_request(prompt="salut")
+            results = collection.find()
 
-if(response == None):
-    pass
+            # client.close()
 
-pokeAPIRequester = PokeAPIRequester()
-jsonResponse = pokeAPIRequester.make_request()
+            for result in results:
+                return result["Sentence"]
+            
+    @staticmethod
+    def get_sentence_pokemon(url):
+        client = pymongo.MongoClient(url)
+        db = client["DB_Bur_Etude"]
+        collection = db["collectionPokeAPI"]
 
-mongoUpdater = MongoDBUpdater("mongodb://127.0.0.1:27017/")
+        results = collection.find()
 
-name = jsonResponse["chain"]["species"]["name"]
-evolutions = jsonResponse["chain"]["evolves_to"]
+        # client.close()
 
-if len(evolutions) > 0:
-    mongoUpdater.update_pokeApi(name , evolution = evolutions[0]["species"]["name"] )
-else:
-    mongoUpdater.update_pokeApi(name , "nothing")
+        for result in results:
+            return "wow my " + result["Name"] + " evolve to " + result["Evolves_to"]
+
+    @staticmethod
+    def get_sentence_GPT(url):
+        client = pymongo.MongoClient(url)
+        db = client["DB_Bur_Etude"]
+        collection = db["collectionChatGPT"]
+
+        results = collection.find()
+
+        # client.close()
+
+        for result in results:
+            return result["Sentence"]
+
+
+
+
+# openAIRequester = OpenAIRequester(key="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")
+# response = openAIRequester.make_request(prompt="salut")
+
+# if(response == None):
+#     pass
+
+# pokeAPIRequester = PokeAPIRequester()
+# jsonResponse = pokeAPIRequester.make_request()
+
+# mongoUpdater = MongoDBUpdater("mongodb://127.0.0.1:27017/")
+
+# name = jsonResponse["chain"]["species"]["name"]
+# evolutions = jsonResponse["chain"]["evolves_to"]
+
+# if len(evolutions) > 0:
+#     mongoUpdater.update_pokeApi(name , evolution = evolutions[0]["species"]["name"] )
+# else:
+#     mongoUpdater.update_pokeApi(name , "nothing")
