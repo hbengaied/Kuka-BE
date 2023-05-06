@@ -5,6 +5,8 @@ import xml.etree.ElementTree as ET
 
 class MouveMyMouseXandY():
     @staticmethod
+    #Si on veut que la souris aille à la position originale on lui donnera la lettre a
+    # sinon pour l'endroit ou le boutton publier se trouve envoyer la touche b
     def MouseMouvementXandY(lettre):
         try:
             tree = ET.parse("input.xml") # je parse le fichier xml

@@ -280,3 +280,13 @@ class Phrase:
         Phrase.MyText = MaPhrase
         Phrase.Compteur = 0
         Phrase.TaillePhrase = len(Phrase.MyText)
+
+class Mouse:
+    #Ces 3 variables sont pour verifier qu'on s'est bien placé sur la souris
+    MouseZUpCheck = False
+    MouseXandYCheck = False
+    MouseZDownCheck = False
+
+    #Ces 2 variables servent à verifier qu'on s'est bien déplacé à la position voulu avec la souris
+    MouseXandYCheckBis = False
+    MouseZUpCheckBis = False
