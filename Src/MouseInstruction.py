@@ -2,6 +2,8 @@ import MouseMoveZ as MMZ
 import MouveMouseXandY as MMXY
 import MovementManager as MM
 import VerificationDest as VD
+import MouvementXandY as MXY
+import MouvementZ as MZ
 
 #declarer les bool dans un autre fichier apres,
 # mais mtn comme j'eris en blind je fais le code et apres j'ameliore
@@ -47,3 +49,37 @@ class Instruction():
             MM.Mouse.MouseZDownCheck = False
             MM.Mouse.MouseXandYCheckBis = False
             MM.Mouse.MouseZUpCheckBis = False
+
+            #je pense il faut return un boolen
+
+    def InstructionClavier(letter):
+        if MM.Phrase.Check == False :
+                #Je donne les coord au robot en x et y auquel il doit se deplacer
+                MXY.MouveMyXandY.MouveXandY(MM.Phrase.MyText[MM.Phrase.Compteur])
+                #Si le robot a atteint les coord x et y et set check a true
+                MM.Phrase.Check = VD.Verification.VerifXandY(MM.Phrase.MyText[MM.Phrase.Compteur])
+            
+        #Si le robot à atteint le x et y voulu on va cliquer sur la touche en bougeant le z
+        if MM.Phrase.Check == True  and MM.Phrase.CheckDown == False :
+            #Deplacement du robot en Z uniquement
+            print("Je descend !!!")
+            MZ.MoveMyZ.MoveZDown(MM.Phrase.MyText[MM.Phrase.Compteur])
+            MM.Phrase.CheckDown = VD.Verification.VerifKeyClicked(MM.Phrase.MyText[MM.Phrase.Compteur])
+
+        if MM.Phrase.CheckDown == True and MM.Phrase.CheckUp == False :
+            # print("Jai pu cliquer sur la touche :", MM.Phrase.MyText[MM.Phrase.Compteur])
+            #Ici lorsque la lettre voulu a été cliqué, on va relever l'outil de +75 en Z
+            MZ.MoveMyZ.MoveZUp(MM.Phrase.MyText[MM.Phrase.Compteur])
+            MM.Phrase.CheckUp = VD.Verification.VerifGoUp(MM.Phrase.MyText[MM.Phrase.Compteur])
+            
+            #Je vais passer caractere suivant    
+        if MM.Phrase.CheckUp == True and MM.Phrase.Check == True and MM.Phrase.CheckDown == True :
+            print("On incremente le compteur ")
+            MM.Phrase.Compteur = MM.Phrase.Compteur +1
+            MM.Phrase.Check = False
+            MM.Phrase.CheckUp = False
+            MM.Phrase.CheckDown = False
+            #Ca c'est juste pour eviter un depassement index quand on arrive fin du mot ! Faut impltementer un autre truc plus propre et plus pro 
+            if MM.Phrase.Compteur == MM.Phrase.TaillePhrase:
+                print("On recommence le mot pcq on vient d'arriver à la fin pour eviter le bug ! Merci de mettre une version plus propre pour gerer ce cas")
+                MM.Phrase.Compteur = 0
