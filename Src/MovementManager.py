@@ -246,6 +246,29 @@ class Dictionnarie: # cette classe ne va contenir juste les positions de chaque 
 
     }
 
+class MouseMouve: 
+    MousePos = {
+        #Lettre A ce sera genre la position initiale
+        "a" : {
+            "X" : "667.08",
+            "Y" : "170.97",
+            "Z" : "295.42", 
+            "A" : "172.07",
+            "B" : "-0.09",
+            "C" : "179.75",
+        },
+        #Lettre B ce sera la position à atteindre pour le bouton
+        "b" : {
+            "X" : "667.08",
+            "Y" : "170.97",
+            "Z" : "295.42", 
+            "A" : "172.07",
+            "B" : "-0.09",
+            "C" : "179.75",
+        },
+    }
+
+
 class Phrase:
     MyText = ""
     Compteur = 0
