@@ -9,26 +9,28 @@ import MouvementZ as MZ
 # mais mtn comme j'eris en blind je fais le code et apres j'ameliore
 
 
-class Instruction():
+class InstructionForRobot():
     @staticmethod
     #Cette methode permet de deplacer la souris d'un point A à un Point B et contient les verification
     #qu'on a bien effectué le mouvement voulu
-    def InstructionMouseMouve(lettrePosOuSeTrouveLaSouris, lettrePosOuOnVeutAllerAvecLaSouris):
+    def InstructionMouse(lettrePosOuSeTrouveLaSouris, lettrePosOuOnVeutAllerAvecLaSouris):
+
         #Faire un deplacement en Z en premier vers le haut comme ca si on est au dessus du clavier on monte de +100
         if MM.Mouse.MouseZUpCheck == False :
             MMZ.MoveMyMouseZ.MoveMouseZUp(lettrePosOuSeTrouveLaSouris)
             MM.Mouse.MouseZUpCheck = VD.Verification.VerifGoUpMouse(lettrePosOuSeTrouveLaSouris)
 
-        #Si le mouvement en Z est ok on fait le mouvement en X et Y de la souris
+        #Si le mouvement en Z est ok on fait le mouvement en X et Y pour se trouver au dessus de la souris
         if MM.Mouse.MouseZUpCheck == True and MM.Mouse.MouseXandYCheck == False:
             MMXY.MouveMyMouseXandY.MouseMouvementXandY(lettrePosOuSeTrouveLaSouris)
             MM.Mouse.MouseXandYCheck = VD.Verification.VerifXandY(lettrePosOuSeTrouveLaSouris)
         
+        #Si on est au dessus de la souris souris on descend en Z pour se placer dans la souris*
         if MM.Mouse.MouseZUpCheck == True and MM.Mouse.MouseXandYCheck == True and MM.Mouse.MouseZDownCheck == False:
             MMZ.MoveMyMouseZ.MoveMouseZDown(lettrePosOuSeTrouveLaSouris)
             MM.Mouse.MouseZDownCheck = VD.Verification.VerifGoDownMouse(lettrePosOuSeTrouveLaSouris)
 
-        #A partir de ici le bras se trouve dans le trouve fait pour la souris
+        #A partir de ici le bras se trouve dans le trou fait pour la souris
         #donc il faut maintenant la deplacer vers la position voulu
 
         if MM.Mouse.MouseZUpCheck == True and MM.Mouse.MouseXandYCheck == True and MM.Mouse.MouseZDownCheck == True:
@@ -49,10 +51,13 @@ class Instruction():
             MM.Mouse.MouseZDownCheck = False
             MM.Mouse.MouseXandYCheckBis = False
             MM.Mouse.MouseZUpCheckBis = False
+            MM.Mouse.EndMouseMouvement = True
+            return True
+        return False
 
-            #je pense il faut return un boolen
 
-    def InstructionClavier(letter):
+
+    def InstructionClavier():
         if MM.Phrase.Check == False :
                 #Je donne les coord au robot en x et y auquel il doit se deplacer
                 MXY.MouveMyXandY.MouveXandY(MM.Phrase.MyText[MM.Phrase.Compteur])
@@ -81,5 +86,8 @@ class Instruction():
             MM.Phrase.CheckDown = False
             #Ca c'est juste pour eviter un depassement index quand on arrive fin du mot ! Faut impltementer un autre truc plus propre et plus pro 
             if MM.Phrase.Compteur == MM.Phrase.TaillePhrase:
-                print("On recommence le mot pcq on vient d'arriver à la fin pour eviter le bug ! Merci de mettre une version plus propre pour gerer ce cas")
-                MM.Phrase.Compteur = 0
+                print("On vient de finir la phrase maintenant passer au deplacement de la souris")
+                MM.Phrase.EndText = True
+                #ici faire une initialisation
+                MM.Mouse.EndMouseMouvement = False
+                MM.Mouse.EndMouseMouvementBis = False

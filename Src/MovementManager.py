@@ -276,6 +276,7 @@ class Phrase:
     Check = False
     CheckUp = False
     CheckDown = False
+    EndText = False
     def Initialisation(MaPhrase):
         Phrase.MyText = MaPhrase
         Phrase.Compteur = 0
@@ -290,3 +291,6 @@ class Mouse:
     #Ces 2 variables servent à verifier qu'on s'est bien déplacé à la position voulu avec la souris
     MouseXandYCheckBis = False
     MouseZUpCheckBis = False
+
+    EndMouseMouvement = False
+    EndMouseMouvementBis = False
