@@ -117,8 +117,9 @@ class MongoDbGetData:
 
 
 
-# openAIRequester = OpenAIRequester(key="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")
+# openAIRequester = OpenAIRequester(key="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")
 # response = openAIRequester.make_request(prompt="salut")
+# print("bbb")
 
 # if(response == None):
 #     pass

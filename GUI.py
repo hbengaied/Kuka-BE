@@ -49,10 +49,13 @@ class Get_Data:
         return RM.MongoDbGetData.get_sentence_GPT("mongodb://127.0.0.1:27017/")
 
 class GUI:
+
+    coord_label = ""
+
     def __init__(self):
         # Crée une instance de Tkinter
         self.root = tk.Tk()
-
+        self.root.title("Menu")
         # Crée le panel du haut
         self.frame_haut = tk.Frame(self.root)
         self.frame_haut.pack(side=tk.TOP, pady=10)
@@ -75,19 +78,20 @@ class GUI:
         self.frame_bas.pack(side=tk.BOTTOM, pady=10)
 
         # Crée un Label pour afficher les coordonnées
-        self.coord_label = tk.Label(self.frame_bas, text="Coordonnées: ")
-        self.coord_label.pack()
+        GUI.coord_label = tk.Label(self.frame_bas, text="Coordonnées: ")
+        GUI.coord_label.pack()
 
         # Envoie une première coordonnée au robot KUKA
         self.nouvelle_coord = (1, 2, 3) # Exemple de coordonnée
-        self.mettre_a_jour_coord(self.nouvelle_coord)
+        GUI.mettre_a_jour_coord(self.nouvelle_coord)
 
         # Lance la boucle principale de Tkinter
         self.root.mainloop()
 
     # Fonction pour mettre à jour les coordonnées dans le Label
-    def mettre_a_jour_coord(self , coord):
-        self.coord_label.configure(text="Coordonnées: {}".format(coord))
+    @staticmethod
+    def mettre_a_jour_coord(coord):
+        GUI.coord_label.configure(text="Coordonnées: {}".format(coord))
 
     # Fonction appelée lorsque le bouton est cliqué
     def valider(self):
