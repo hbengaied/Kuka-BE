@@ -116,6 +116,7 @@ class Verification():
             PosB = float(MM.MouseMouve.MousePos[lettre]["B"])
             PosC = float(MM.MouseMouve.MousePos[lettre]["C"])
             if abs(PosX-x) <0.3 and abs(PosY-y) <0.3 and abs(PosZ-z)<0.3 :
+                print("Je viens de monter pour la souris")
                 return True
         except:
             pass
@@ -146,6 +147,34 @@ class Verification():
             PosB = float(MM.MouseMouve.MousePos[lettre]["B"])
             PosC = float(MM.MouseMouve.MousePos[lettre]["C"])
             if abs(PosX-x) <0.3 and abs(PosY-y) <0.3 and abs(PosZ-z)<0.3 :
+                return True
+        except:
+            pass
+        return False
+    
+    @staticmethod
+    def VerifXandYMouse(lettre):
+        try:
+            # parse the XML file
+            tree = ET.parse('input.xml')
+
+            # get the root element of the XML file
+            root = tree.getroot()
+
+            # get the values of X, Y, Z, A, B, C from the RIst element
+            rist = root.find('RIst')
+            x = float(rist.get('X'))
+            y = float(rist.get('Y'))
+            a = float(rist.get('A'))
+            b = float(rist.get('B'))
+            c = float(rist.get('C'))
+
+            PosX = float(MM.MouseMouve.MousePos[lettre]["X"])
+            PosY = float(MM.MouseMouve.MousePos[lettre]["Y"])
+            PosA = float(MM.MouseMouve.MousePos[lettre]["A"])
+            PosB = float(MM.MouseMouve.MousePos[lettre]["B"])
+            PosC = float(MM.MouseMouve.MousePos[lettre]["C"])
+            if abs(PosX-x) <0.3 and abs(PosY-y) <0.3 :
                 return True
         except:
             pass

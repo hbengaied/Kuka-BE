@@ -27,7 +27,6 @@ class MoveMyMouseZ():
 
             XmlManager.XmlManager.SetDataToSend(Data) # cette fonction sert à initialisé le fichier xml "output.xml"
             CM.SendData.Send() # et juste aprés, il envoie le fichier xml
-            
         except:
             pass
 

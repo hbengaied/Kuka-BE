@@ -7,7 +7,7 @@ class MouveMyMouseXandY():
     @staticmethod
     #Si on veut que la souris aille à la position originale on lui donnera la lettre a
     # sinon pour l'endroit ou le boutton publier se trouve envoyer la touche b
-    def MouseMouvementXandY(lettre):
+    def MouseMouvementXandY(lettre, monint):
         try:
             tree = ET.parse("input.xml") # je parse le fichier xml
             root = tree.getroot() # je prend la balise root du fichier
@@ -17,7 +17,7 @@ class MouveMyMouseXandY():
                 if element.tag == "IPOC":
                     ipoc_balise = element
             
-            PosZ = float(MM.MouseMouve.MousePos[lettre]["Z"]) + 100
+            PosZ = float(MM.MouseMouve.MousePos[lettre]["Z"]) + monint
             StringPosZ = str(PosZ)
             Data = { # j'initialise le dictionnaire de donnée à envoyé au robot, ATTENTION 
                 "X" : MM.MouseMouve.MousePos[lettre]["X"],

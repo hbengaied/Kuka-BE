@@ -22,8 +22,8 @@ class InstructionForRobot():
 
         #Si le mouvement en Z est ok on fait le mouvement en X et Y pour se trouver au dessus de la souris
         if MM.Mouse.MouseZUpCheck == True and MM.Mouse.MouseXandYCheck == False:
-            MMXY.MouveMyMouseXandY.MouseMouvementXandY(lettrePosOuSeTrouveLaSouris)
-            MM.Mouse.MouseXandYCheck = VD.Verification.VerifXandY(lettrePosOuSeTrouveLaSouris)
+            MMXY.MouveMyMouseXandY.MouseMouvementXandY(lettrePosOuSeTrouveLaSouris, 100)
+            MM.Mouse.MouseXandYCheck = VD.Verification.VerifXandYMouse(lettrePosOuSeTrouveLaSouris)
         
         #Si on est au dessus de la souris souris on descend en Z pour se placer dans la souris*
         if MM.Mouse.MouseZUpCheck == True and MM.Mouse.MouseXandYCheck == True and MM.Mouse.MouseZDownCheck == False:
@@ -36,8 +36,8 @@ class InstructionForRobot():
         if MM.Mouse.MouseZUpCheck == True and MM.Mouse.MouseXandYCheck == True and MM.Mouse.MouseZDownCheck == True:
             #Faire deplacement en x et y
             if MM.Mouse.MouseXandYCheckBis == False :
-                MMXY.MouveMyMouseXandY.MouseMouvementXandY(lettrePosOuOnVeutAllerAvecLaSouris)
-                MM.Mouse.MouseXandYCheckBis = VD.Verification.VerifXandY(lettrePosOuOnVeutAllerAvecLaSouris)
+                MMXY.MouveMyMouseXandY.MouseMouvementXandY(lettrePosOuOnVeutAllerAvecLaSouris,0)
+                MM.Mouse.MouseXandYCheckBis = VD.Verification.VerifXandYMouse(lettrePosOuOnVeutAllerAvecLaSouris)
             
             #Si le deplacement en X et Y a été fait on leve le bras
             if MM.Mouse.MouseXandYCheckBis == True and MM.Mouse.MouseZUpCheckBis == False: 
@@ -79,14 +79,12 @@ class InstructionForRobot():
             
             #Je vais passer caractere suivant    
         if MM.Phrase.CheckUp == True and MM.Phrase.Check == True and MM.Phrase.CheckDown == True :
-            print("On incremente le compteur ")
             MM.Phrase.Compteur = MM.Phrase.Compteur +1
             MM.Phrase.Check = False
             MM.Phrase.CheckUp = False
             MM.Phrase.CheckDown = False
             #Ca c'est juste pour eviter un depassement index quand on arrive fin du mot ! Faut impltementer un autre truc plus propre et plus pro 
             if MM.Phrase.Compteur == MM.Phrase.TaillePhrase:
-                print("On vient de finir la phrase maintenant passer au deplacement de la souris")
                 MM.Phrase.EndText = True
                 #ici faire une initialisation
                 MM.Mouse.EndMouseMouvement = False

@@ -15,7 +15,7 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
         self.ip = ipclient
         self.port = portClient
         self.clientsocket = clientsocket
-        MM.Phrase.Initialisation("hicheme ca va")
+        MM.Phrase.Initialisation("b")
 
     def run(self): # cette fonction est appelé lorsque kuka a réussi à se connecter
         print("Connexion réussi")
@@ -40,8 +40,8 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
                 if MM.Mouse.EndMouseMouvement == False : 
                     MM.Mouse.EndMouseMouvement = INSTRU.InstructionForRobot.InstructionMouse("a", "b")
                 #Ici on est alle du point A au point B maintenant on aimerait remettre la souris sur le point A
-                if MM.Mouse.EndMouseMouvement == True :
-                    MM.Mouse.EndMouseMouvementBis = INSTRU.InstructionForRobot.InstructionMouse("b", "a")
+                # if MM.Mouse.EndMouseMouvement == True :
+                #     MM.Mouse.EndMouseMouvementBis = INSTRU.InstructionForRobot.InstructionMouse("b", "a")
 
 
 class SendData():
