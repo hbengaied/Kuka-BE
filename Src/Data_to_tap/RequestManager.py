@@ -113,26 +113,3 @@ class MongoDbGetData:
 
         for result in results:
             return result["Sentence"]
-
-
-
-
-# openAIRequester = OpenAIRequester(key="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") # => c'est la clé de ibra
-# response = openAIRequester.make_request(prompt="salut")
-# print("bbb")
-
-# if(response == None):
-#     pass
-
-# pokeAPIRequester = PokeAPIRequester()
-# jsonResponse = pokeAPIRequester.make_request()
-
-# mongoUpdater = MongoDBUpdater("mongodb://127.0.0.1:27017/")
-
-# name = jsonResponse["chain"]["species"]["name"]
-# evolutions = jsonResponse["chain"]["evolves_to"]
-
-# if len(evolutions) > 0:
-#     mongoUpdater.update_pokeApi(name , evolution = evolutions[0]["species"]["name"] )
-# else:
-#     mongoUpdater.update_pokeApi(name , "nothing")

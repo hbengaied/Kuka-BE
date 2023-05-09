@@ -6,6 +6,7 @@ import MovementManager as MM
 import MouvementXandY as MXY
 import VerificationDest as VD
 import MouvementZ as MZ
+import GUI
 
 class ReceiveThread(threading.Thread): # cette classe servira principalement à la reception de paquet et lorsqu'il recoit qqu chose alors il commence la conversation avec le kuka
 
@@ -14,7 +15,9 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
         self.ip = ipclient
         self.port = portClient
         self.clientsocket = clientsocket
-        MM.Phrase.Initialisation("hicheme ca va")
+        # Je fait une requête à l'api pokemon et je peux déjà instancié la phrase que le robot va appuyer
+        GUI.Set_Data.Ask_To_PokeApi()
+        MM.Phrase.Initialisation(GUI.Get_Data.get_poke_api())
 
     def run(self): # cette fonction est appelé lorsque kuka a réussi à se connecter
         print("Connexion réussi")

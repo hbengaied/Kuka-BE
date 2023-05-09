@@ -41,7 +41,7 @@ class Get_Data:
         return RM.MongoDbGetData.get_sentence_hello_world("mongodb://127.0.0.1:27017/")
     
     @staticmethod
-    def get_poke_api():
+    def get_poke_api() -> str:
         return RM.MongoDbGetData.get_sentence_pokemon("mongodb://127.0.0.1:27017/")
     
     @staticmethod
@@ -115,4 +115,3 @@ class GUI:
             print("Chose à écrire: ", data)
 
 
-GUI()
