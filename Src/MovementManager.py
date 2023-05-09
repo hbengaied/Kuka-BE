@@ -292,6 +292,14 @@ class MouseMouve:
             "B" : "-0.15",
             "C" : "179.77",
         },
+        "new" : {
+            "X" : "628.82",
+            "Y" : "61.14",
+            "Z" : "294.96", 
+            "A" : "172.06",
+            "B" : "-0.21",
+            "C" : "179.79",
+        },
     }
 
 
@@ -324,7 +332,7 @@ class Mouse:
 
     LeftClick = False
 
-    TabulationThree = False
+    NewTweet = False
     TabulationEight = False
     EnterClicked = False
     NombreClickTabulation = 0

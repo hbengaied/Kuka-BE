@@ -192,3 +192,38 @@ class InstructionForRobot():
 
         return False
 
+    def OpenWritingSpace() :
+        #Etape 1 Monter en Z pour Sortir de la souris
+        if MM.Mouse.MouseZUpCheck == False :
+            MMZ.MoveMyMouseZ.MoveMouseZUp("new")
+            MM.Mouse.MouseZUpCheck = VD.Verification.VerifGoUpMouse("new")
+
+        #Etape 2 Se diriger vers le bouton +
+        if MM.Mouse.MouseZUpCheck == True and MM.Mouse.MouseXandYCheck == False:
+            MMXY.MouveMyMouseXandY.MouseMouvementXandY("new", 100)
+            MM.Mouse.MouseXandYCheck = VD.Verification.VerifXandYMouse("new")
+
+        #Etape 3 appuyer sur le bouton
+        #Si on est au dessus du + on descend en Z pour se placer dans la souris
+        if MM.Mouse.MouseZUpCheck == True and MM.Mouse.MouseXandYCheck == True and MM.Mouse.MouseZDownCheck == False:
+            MMZ.MoveMyMouseZ.MoveMouseZDown("new")
+            MM.Mouse.MouseZDownCheck = VD.Verification.VerifGoDownMouse("new")
+
+        #Etape 4 Remonter -> Il faut un autre boolen
+        if MM.Mouse.MouseZUpCheck == True and MM.Mouse.MouseXandYCheck == True and MM.Mouse.MouseZDownCheck == True and MM.Mouse.MouseZUpCheckBis == False :
+            MMZ.MoveMyMouseZ.MoveMouseZUp("new")
+            MM.Mouse.MouseZUpCheckBis = VD.Verification.VerifGoUpMouse("new")
+            print("JE REMONTE")
+
+        #Ici si le mouvement voulu a été fait et que le bras c'est relevé on reinitialise tout
+        if MM.Mouse.MouseZUpCheckBis == True :
+            MM.Mouse.MouseZUpCheck = False
+            MM.Mouse.MouseXandYCheck = False
+            MM.Mouse.MouseZDownCheck = False
+            MM.Mouse.MouseXandYCheckBis = False
+            MM.Mouse.MouseZUpCheckBis = False
+            return True
+
+        return False
+
+

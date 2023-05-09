@@ -27,10 +27,10 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
             f.close() # je m'assure que le fichier est bien fermé et donc que l'écriture est terminé avant de commencer à répondre au robot
             
 
-            if MM.Mouse.TabulationThree == False :
-                MM.Mouse.TabulationThree = INSTRU.InstructionForRobot.ClickOnTabulation("t", 18)
+            if MM.Mouse.NewTweet == False :
+                MM.Mouse.NewTweet = INSTRU.InstructionForRobot.OpenWritingSpace()
             #Si on a pas fini de taper notre text on va entrer uniquement dans le if
-            if MM.Mouse.TabulationThree == True and MM.Phrase.EndText == False :
+            if MM.Mouse.NewTweet == True and MM.Phrase.EndText == False :
                 INSTRU.InstructionForRobot.InstructionClavier()
             
             if MM.Phrase.EndText == True and MM.Mouse.TabulationEight == False :
