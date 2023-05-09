@@ -241,13 +241,6 @@ class Dictionnarie: # cette classe ne va contenir juste les positions de chaque 
             "A" : "172.06",
             "B" : "-0.26",
             "C" : "179.80",
-        },"tabulation" : {
-            "X" : "606.58",
-            "Y" : "76.29",
-            "Z" : "295.10", 
-            "A" : "172.06",
-            "B" : "-0.26",
-            "C" : "179.80",
         },
 
         
@@ -283,6 +276,22 @@ class MouseMouve:
             "B" : "-0.17",
             "C" : "179.78",
         },
+        "t" : {
+            "X" : "664.90",
+            "Y" : "193.95",
+            "Z" : "296.84", 
+            "A" : "172.06",
+            "B" : "-0.14",
+            "C" : "179.77",
+        },
+        "enter" : {
+            "X" : "664.86",
+            "Y" : "-64.60",
+            "Z" : "296.70", 
+            "A" : "172.06",
+            "B" : "-0.15",
+            "C" : "179.77",
+        },
     }
 
 
@@ -314,3 +323,8 @@ class Mouse:
     EndMouseMouvementBis = False
 
     LeftClick = False
+
+    TabulationThree = False
+    TabulationEight = False
+    EnterClicked = False
+    NombreClickTabulation = 0

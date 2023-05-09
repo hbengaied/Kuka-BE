@@ -121,3 +121,74 @@ class InstructionForRobot():
                 #ici faire une initialisation
                 MM.Mouse.EndMouseMouvement = False
                 MM.Mouse.EndMouseMouvementBis = False
+
+    def ClickOnTabulation(lettrePosOuSeTrouveLaSouris, NbOfClicks):
+        #Etape 1 Monter en Z pour Sortir de la souris
+        if MM.Mouse.MouseZUpCheck == False :
+            MMZ.MoveMyMouseZ.MoveMouseZUp(lettrePosOuSeTrouveLaSouris)
+            MM.Mouse.MouseZUpCheck = VD.Verification.VerifGoUpMouse(lettrePosOuSeTrouveLaSouris)
+
+        #Etape 2 Se diriger vers le bouton +
+        if MM.Mouse.MouseZUpCheck == True and MM.Mouse.MouseXandYCheck == False:
+            MMXY.MouveMyMouseXandY.MouseMouvementXandY("t", 100)
+            MM.Mouse.MouseXandYCheck = VD.Verification.VerifXandYMouse("t")
+
+        #Etape 3 appuyer sur le bouton
+        #Si on est au dessus du + on descend en Z pour se placer dans la souris
+        if MM.Mouse.MouseZUpCheck == True and MM.Mouse.MouseXandYCheck == True and MM.Mouse.MouseZDownCheck == False:
+            MMZ.MoveMyMouseZ.MoveMouseZDown("t")
+            MM.Mouse.MouseZDownCheck = VD.Verification.VerifGoDownMouse("t")
+
+        #Etape 4 Remonter -> Il faut un autre boolen
+        if MM.Mouse.MouseZUpCheck == True and MM.Mouse.MouseXandYCheck == True and MM.Mouse.MouseZDownCheck == True and MM.Mouse.MouseZUpCheckBis == False :
+            MMZ.MoveMyMouseZ.MoveMouseZUp("t")
+            MM.Mouse.MouseZUpCheckBis = VD.Verification.VerifGoUpMouse("t")
+
+        #Ici si le mouvement voulu a été fait et que le bras c'est relevé on reinitialise tout
+        if MM.Mouse.MouseZUpCheckBis == True :
+            MM.Mouse.MouseZUpCheck = False
+            MM.Mouse.MouseXandYCheck = False
+            MM.Mouse.MouseZDownCheck = False
+            MM.Mouse.MouseXandYCheckBis = False
+            MM.Mouse.MouseZUpCheckBis = False
+            MM.Mouse.NombreClickTabulation += 1
+
+        if MM.Mouse.NombreClickTabulation == NbOfClicks :
+            MM.Mouse.NombreClickTabulation = 0
+            return True
+
+        return False
+
+    def ClickOnEnter():
+        #Etape 1 Monter en Z pour Sortir de la souris
+        if MM.Mouse.MouseZUpCheck == False :
+            MMZ.MoveMyMouseZ.MoveMouseZUp(MM.Phrase.MyText[-1])
+            MM.Mouse.MouseZUpCheck = VD.Verification.VerifGoUpMouse(MM.Phrase.MyText[-1])
+
+        #Etape 2 Se diriger vers le bouton +
+        if MM.Mouse.MouseZUpCheck == True and MM.Mouse.MouseXandYCheck == False:
+            MMXY.MouveMyMouseXandY.MouseMouvementXandY("enter", 100)
+            MM.Mouse.MouseXandYCheck = VD.Verification.VerifXandYMouse("enter")
+
+        #Etape 3 appuyer sur le bouton
+        #Si on est au dessus du + on descend en Z pour se placer dans la souris
+        if MM.Mouse.MouseZUpCheck == True and MM.Mouse.MouseXandYCheck == True and MM.Mouse.MouseZDownCheck == False:
+            MMZ.MoveMyMouseZ.MoveMouseZDown("enter")
+            MM.Mouse.MouseZDownCheck = VD.Verification.VerifGoDownMouse("enter")
+
+        #Etape 4 Remonter -> Il faut un autre boolen
+        if MM.Mouse.MouseZUpCheck == True and MM.Mouse.MouseXandYCheck == True and MM.Mouse.MouseZDownCheck == True and MM.Mouse.MouseZUpCheckBis == False :
+            MMZ.MoveMyMouseZ.MoveMouseZUp("enter")
+            MM.Mouse.MouseZUpCheckBis = VD.Verification.VerifGoUpMouse("enter")
+
+        #Ici si le mouvement voulu a été fait et que le bras c'est relevé on reinitialise tout
+        if MM.Mouse.MouseZUpCheckBis == True :
+            MM.Mouse.MouseZUpCheck = False
+            MM.Mouse.MouseXandYCheck = False
+            MM.Mouse.MouseZDownCheck = False
+            MM.Mouse.MouseXandYCheckBis = False
+            MM.Mouse.MouseZUpCheckBis = False
+            return True
+
+        return False
+

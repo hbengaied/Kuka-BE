@@ -15,7 +15,7 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
         self.ip = ipclient
         self.port = portClient
         self.clientsocket = clientsocket
-        MM.Phrase.Initialisation("je suis kuka le robot")
+        MM.Phrase.Initialisation("robot")
 
     def run(self): # cette fonction est appelé lorsque kuka a réussi à se connecter
         print("Connexion réussi")
@@ -27,9 +27,24 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
             f.close() # je m'assure que le fichier est bien fermé et donc que l'écriture est terminé avant de commencer à répondre au robot
             
 
+            if MM.Mouse.TabulationThree == False :
+                MM.Mouse.TabulationThree = INSTRU.InstructionForRobot.ClickOnTabulation("t", 18)
             #Si on a pas fini de taper notre text on va entrer uniquement dans le if
-            if MM.Phrase.EndText == False :
+            if MM.Mouse.TabulationThree == True and MM.Phrase.EndText == False :
                 INSTRU.InstructionForRobot.InstructionClavier()
+            
+            if MM.Phrase.EndText == True and MM.Mouse.TabulationEight == False :
+                MM.Mouse.TabulationEight = INSTRU.InstructionForRobot.ClickOnTabulation("t", 8)
+            
+            if MM.Phrase.EndText == True and MM.Mouse.TabulationEight == True and MM.Mouse.EnterClicked == False:
+                #faire le deplacement vers le button entrer
+                MM.Mouse.EnterClicked = INSTRU.InstructionForRobot.ClickOnEnter()
+
+            if MM.Mouse.EnterClicked == True :
+                print("Le tweet a été fait")
+                exit()
+
+
             # else:
             #     #Si on a fini de taper notre text on deplacer la souris 
             #     #Deplacer la souris vers le point initial
