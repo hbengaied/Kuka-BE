@@ -246,6 +246,29 @@ class Dictionnarie: # cette classe ne va contenir juste les positions de chaque 
 
     }
 
+class MouseMouve: 
+    MousePos = {
+        #Lettre A ce sera genre la position initiale
+        "a" : {
+            "X" : "497.83",
+            "Y" : "307.62",
+            "Z" : "300.27", 
+            "A" : "172.19",
+            "B" : "-0.14",
+            "C" : "179.77",
+        },
+        #Lettre B ce sera la position à atteindre pour le bouton
+        "b" : {
+            "X" : "498.01",
+            "Y" : "145.27",
+            "Z" : "300.23", 
+            "A" : "172.20",
+            "B" : "-0.14",
+            "C" : "179.77",
+        },
+    }
+
+
 class Phrase:
     MyText = ""
     Compteur = 0
@@ -253,7 +276,21 @@ class Phrase:
     Check = False
     CheckUp = False
     CheckDown = False
+    EndText = False
     def Initialisation(MaPhrase):
         Phrase.MyText = MaPhrase
         Phrase.Compteur = 0
         Phrase.TaillePhrase = len(Phrase.MyText)
+
+class Mouse:
+    #Ces 3 variables sont pour verifier qu'on s'est bien placé sur la souris
+    MouseZUpCheck = False
+    MouseXandYCheck = False
+    MouseZDownCheck = False
+
+    #Ces 2 variables servent à verifier qu'on s'est bien déplacé à la position voulu avec la souris
+    MouseXandYCheckBis = False
+    MouseZUpCheckBis = False
+
+    EndMouseMouvement = False
+    EndMouseMouvementBis = False
