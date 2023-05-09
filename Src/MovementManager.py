@@ -241,7 +241,15 @@ class Dictionnarie: # cette classe ne va contenir juste les positions de chaque 
             "A" : "172.06",
             "B" : "-0.26",
             "C" : "179.80",
+        },"tabulation" : {
+            "X" : "606.58",
+            "Y" : "76.29",
+            "Z" : "295.10", 
+            "A" : "172.06",
+            "B" : "-0.26",
+            "C" : "179.80",
         },
+
         
 
     }
@@ -250,21 +258,30 @@ class MouseMouve:
     MousePos = {
         #Lettre A ce sera genre la position initiale
         "a" : {
-            "X" : "497.83",
-            "Y" : "307.62",
-            "Z" : "300.27", 
-            "A" : "172.19",
-            "B" : "-0.14",
-            "C" : "179.77",
+            "X" : "471.38",
+            "Y" : "331.20",
+            "Z" : "302.00", 
+            "A" : "172.11",
+            "B" : "-0.25",
+            "C" : "179.86",
         },
         #Lettre B ce sera la position à atteindre pour le bouton
         "b" : {
-            "X" : "498.01",
-            "Y" : "145.27",
-            "Z" : "300.23", 
-            "A" : "172.20",
-            "B" : "-0.14",
-            "C" : "179.77",
+            "X" : "518.73",
+            "Y" : "257.33",
+            "Z" : "302.22", 
+            "A" : "172.11",
+            "B" : "-0.25",
+            "C" : "179.85",
+        },
+        #Le signe + sert comme clic gauche
+        "+" : {
+            "X" : "658.23",
+            "Y" : "-213.20",
+            "Z" : "296.34", 
+            "A" : "172.06",
+            "B" : "-0.17",
+            "C" : "179.78",
         },
     }
 
@@ -291,6 +308,9 @@ class Mouse:
     #Ces 2 variables servent à verifier qu'on s'est bien déplacé à la position voulu avec la souris
     MouseXandYCheckBis = False
     MouseZUpCheckBis = False
+    MouseZDownCheckBis = False
 
     EndMouseMouvement = False
     EndMouseMouvementBis = False
+
+    LeftClick = False

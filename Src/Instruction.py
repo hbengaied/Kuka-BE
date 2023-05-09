@@ -56,6 +56,38 @@ class InstructionForRobot():
         return False
 
 
+    def ClicGauche(lettrePosOuSeTrouveLaSouris):
+        #Etape 1 Monter en Z pour Sortir de la souris
+        if MM.Mouse.MouseZUpCheck == False :
+            MMZ.MoveMyMouseZ.MoveMouseZUp(lettrePosOuSeTrouveLaSouris)
+            MM.Mouse.MouseZUpCheck = VD.Verification.VerifGoUpMouse(lettrePosOuSeTrouveLaSouris)
+
+        #Etape 2 Se diriger vers le bouton +
+        if MM.Mouse.MouseZUpCheck == True and MM.Mouse.MouseXandYCheck == False:
+            MMXY.MouveMyMouseXandY.MouseMouvementXandY("+", 100)
+            MM.Mouse.MouseXandYCheck = VD.Verification.VerifXandYMouse("+")
+
+        #Etape 3 appuyer sur le bouton
+        #Si on est au dessus du + on descend en Z pour se placer dans la souris
+        if MM.Mouse.MouseZUpCheck == True and MM.Mouse.MouseXandYCheck == True and MM.Mouse.MouseZDownCheck == False:
+            MMZ.MoveMyMouseZ.MoveMouseZDown("+")
+            MM.Mouse.MouseZDownCheck = VD.Verification.VerifGoDownMouse("+")
+
+        #Etape 4 Remonter -> Il faut un autre boolen
+        if MM.Mouse.MouseZUpCheck == True and MM.Mouse.MouseXandYCheck == True and MM.Mouse.MouseZDownCheck == True and MM.Mouse.MouseZUpCheckBis == False :
+            MMZ.MoveMyMouseZ.MoveMouseZUp("+")
+            MM.Mouse.MouseZUpCheckBis = VD.Verification.VerifGoUpMouse("+")
+
+        #Ici si le mouvement voulu a été fait et que le bras c'est relevé on reinitialise tout
+        if MM.Mouse.MouseZUpCheckBis == True :
+            MM.Mouse.MouseZUpCheck = False
+            MM.Mouse.MouseXandYCheck = False
+            MM.Mouse.MouseZDownCheck = False
+            MM.Mouse.MouseXandYCheckBis = False
+            MM.Mouse.MouseZUpCheckBis = False
+            return True
+        return False
+
 
     def InstructionClavier():
         if MM.Phrase.Check == False :

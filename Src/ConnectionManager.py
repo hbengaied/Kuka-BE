@@ -15,7 +15,7 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
         self.ip = ipclient
         self.port = portClient
         self.clientsocket = clientsocket
-        MM.Phrase.Initialisation("b")
+        MM.Phrase.Initialisation("je suis kuka le robot")
 
     def run(self): # cette fonction est appelé lorsque kuka a réussi à se connecter
         print("Connexion réussi")
@@ -30,18 +30,25 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
             #Si on a pas fini de taper notre text on va entrer uniquement dans le if
             if MM.Phrase.EndText == False :
                 INSTRU.InstructionForRobot.InstructionClavier()
-            else:
-                #Si on a fini de taper notre text on deplacer la souris 
-                #Deplacer la souris vers le point initial
-                #Aller vers la ou on veut
-                #Faire le clic -> Methode a dev mais c'est rapdie normalement
+            # else:
+            #     #Si on a fini de taper notre text on deplacer la souris 
+            #     #Deplacer la souris vers le point initial
+            #     #Aller vers la ou on veut
+            #     #Faire le clic -> Methode a dev mais c'est rapdie normalement
                 
-                #La souris se trouve en A et nous on veut aller en B
-                if MM.Mouse.EndMouseMouvement == False : 
-                    MM.Mouse.EndMouseMouvement = INSTRU.InstructionForRobot.InstructionMouse("a", "b")
-                #Ici on est alle du point A au point B maintenant on aimerait remettre la souris sur le point A
-                # if MM.Mouse.EndMouseMouvement == True :
-                #     MM.Mouse.EndMouseMouvementBis = INSTRU.InstructionForRobot.InstructionMouse("b", "a")
+            #     #La souris se trouve en A et nous on veut aller en B
+            #     if MM.Mouse.EndMouseMouvement == False : 
+            #         MM.Mouse.EndMouseMouvement = INSTRU.InstructionForRobot.InstructionMouse("a", "b")
+            #     #Ici on va aller vers le + pour faire le clic gauche
+            #     if MM.Mouse.EndMouseMouvement == True and MM.Mouse.LeftClick == False :
+            #         MM.Mouse.LeftClick = INSTRU.InstructionForRobot.ClicGauche("b")
+
+            #     #Ici on est alle du point A au point B maintenant on aimerait remettre la souris sur le point A
+            #     if MM.Mouse.LeftClick == True :
+            #         MM.Mouse.EndMouseMouvementBis = INSTRU.InstructionForRobot.InstructionMouse("b", "a")
+
+            #     if MM.Mouse.EndMouseMouvementBis == True :
+            #         print("FIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIINNNNNNNNNNNNNNNNNNNNNNNNNNNNN")
 
 
 class SendData():
