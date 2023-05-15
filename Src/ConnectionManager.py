@@ -60,7 +60,7 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
                     MM.Phrase.Compteur = 0
 
 class SendData():
-    clientsocket = "" # cette objet va contenir le socket qui est utilisé qu'une seule fois, je la met en static
+    clientsocket = "" # cette objet va contenir le socket qui est utilisé qu'une seule fois, je la met en static 
     @staticmethod
     def Send():
         DataToSend = ""
