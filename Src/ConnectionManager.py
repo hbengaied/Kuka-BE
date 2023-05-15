@@ -47,7 +47,7 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
                 MZ.MoveMyZ.MoveZUp(MM.Phrase.MyText[MM.Phrase.Compteur])
                 MM.Phrase.CheckUp = VD.Verification.VerifGoUp(MM.Phrase.MyText[MM.Phrase.Compteur])
                 
-             #Je vais passer caractere suivant    
+            #Je vais passer caractere suivant    
             if MM.Phrase.CheckUp == True and MM.Phrase.Check == True and MM.Phrase.CheckDown == True :
                 print("On incremente le compteur ")
                 MM.Phrase.Compteur = MM.Phrase.Compteur +1
