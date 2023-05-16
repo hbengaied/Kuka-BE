@@ -242,9 +242,66 @@ class Dictionnarie: # cette classe ne va contenir juste les positions de chaque 
             "B" : "-0.26",
             "C" : "179.80",
         },
+
         
 
     }
+
+class MouseMouve: 
+    MousePos = {
+        #Lettre A ce sera genre la position initiale
+        "a" : {
+            "X" : "471.38",
+            "Y" : "331.20",
+            "Z" : "302.00", 
+            "A" : "172.11",
+            "B" : "-0.25",
+            "C" : "179.86",
+        },
+        #Lettre B ce sera la position à atteindre pour le bouton
+        "b" : {
+            "X" : "518.73",
+            "Y" : "257.33",
+            "Z" : "302.22", 
+            "A" : "172.11",
+            "B" : "-0.25",
+            "C" : "179.85",
+        },
+        #Le signe + sert comme clic gauche
+        "+" : {
+            "X" : "658.23",
+            "Y" : "-213.20",
+            "Z" : "296.34", 
+            "A" : "172.06",
+            "B" : "-0.17",
+            "C" : "179.78",
+        },
+        "t" : {
+            "X" : "664.90",
+            "Y" : "193.95",
+            "Z" : "296.84", 
+            "A" : "172.06",
+            "B" : "-0.14",
+            "C" : "179.77",
+        },
+        "enter" : {
+            "X" : "664.86",
+            "Y" : "-64.60",
+            "Z" : "296.70", 
+            "A" : "172.06",
+            "B" : "-0.15",
+            "C" : "179.77",
+        },
+        "new" : {
+            "X" : "628.82",
+            "Y" : "61.14",
+            "Z" : "294.96", 
+            "A" : "172.06",
+            "B" : "-0.21",
+            "C" : "179.79",
+        },
+    }
+
 
 class Phrase:
     MyText = ""
@@ -253,7 +310,29 @@ class Phrase:
     Check = False
     CheckUp = False
     CheckDown = False
+    EndText = False
     def Initialisation(MaPhrase):
         Phrase.MyText = MaPhrase
         Phrase.Compteur = 0
         Phrase.TaillePhrase = len(Phrase.MyText)
+
+class Mouse:
+    #Ces 3 variables sont pour verifier qu'on s'est bien placé sur la souris
+    MouseZUpCheck = False
+    MouseXandYCheck = False
+    MouseZDownCheck = False
+
+    #Ces 2 variables servent à verifier qu'on s'est bien déplacé à la position voulu avec la souris
+    MouseXandYCheckBis = False
+    MouseZUpCheckBis = False
+    MouseZDownCheckBis = False
+
+    EndMouseMouvement = False
+    EndMouseMouvementBis = False
+
+    LeftClick = False
+
+    NewTweet = False
+    TabulationEight = False
+    EnterClicked = False
+    NombreClickTabulation = 0
