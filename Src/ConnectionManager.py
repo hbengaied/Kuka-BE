@@ -7,6 +7,7 @@ import MouvementXandY as MXY
 import VerificationDest as VD
 import MouvementZ as MZ
 import Instruction as INSTRU
+import Data_to_tap.RequestManager as RM
 
 class ReceiveThread(threading.Thread): # cette classe servira principalement à la reception de paquet et lorsqu'il recoit qqu chose alors il commence la conversation avec le kuka
 
@@ -15,7 +16,8 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
         self.ip = ipclient
         self.port = portClient
         self.clientsocket = clientsocket
-        MM.Phrase.Initialisation("a")
+        pokeApi = RM.PokeAPIRequester()
+        MM.Phrase.Initialisation(pokeApi.give_me_sentence())
 
     def run(self): # cette fonction est appelé lorsque kuka a réussi à se connecter
         print("Connexion réussi")
