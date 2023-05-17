@@ -1,10 +1,7 @@
 import socket
 import threading
-import tkinter
-import xml.etree.ElementTree as ET
 
 import XmlManager
-import TopicTweet
 import MovementManager
 
 class Server(threading.Thread):

@@ -13,9 +13,13 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
 
     def __init__(self, ipclient, portClient, clientsocket):
         threading.Thread.__init__(self)
+        # j'instancie l'ip du client dans la variable sel.ip
+        # le port du client dans self.port
+        # et la même avec le socket
         self.ip = ipclient
         self.port = portClient
         self.clientsocket = clientsocket
+        # Enfin, je fait déjà la requête à l'api pris, pour qu'il puisse obtenir la phrase que le robot doit écrire
         pokeApi = RM.PokeAPIRequester()
         MM.Phrase.Initialisation(pokeApi.give_me_sentence())
 

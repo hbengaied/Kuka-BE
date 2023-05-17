@@ -1,5 +1,3 @@
-import TopicTweet
-
 class Dictionnarie: # cette classe ne va contenir juste les positions de chaque caractère utilisé
     Dico = {
         "a" : {
