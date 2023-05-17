@@ -35,6 +35,8 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
             if MM.Mouse.NewTweet == True and MM.Phrase.EndText == False :
                 INSTRU.InstructionForRobot.InstructionClavier()
             
+            ######## COMMENTER  DE LA 39 A LA LIGNE 48 POUR TESTER LA SOURIS#################
+            
             if MM.Phrase.EndText == True and MM.Mouse.TabulationEight == False :
                 MM.Mouse.TabulationEight = INSTRU.InstructionForRobot.ClickOnTabulation("t", 8)
             
@@ -46,8 +48,9 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
                 print("Le tweet a été fait")
                 exit()
 
+####################DECOMMENTER CETTE PARTIE POUR LE TEST DE LA SOURIS######################################
 
-            # else:
+            # if MM.Phrase.EndText == True:
             #     #Si on a fini de taper notre text on deplacer la souris 
             #     #Deplacer la souris vers le point initial
             #     #Aller vers la ou on veut
