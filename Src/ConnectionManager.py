@@ -17,7 +17,7 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
         self.port = portClient
         self.clientsocket = clientsocket
         self.pokeApi = RM.PokeAPIRequester()
-        MM.Phrase.Initialisation(self.pokeApi.give_me_sentence())
+        MM.Phrase.Initialisation("hicheme")
 
     def run(self): # cette fonction est appelé lorsque kuka a réussi à se connecter
         print("Connexion réussi")
@@ -37,40 +37,41 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
             
             ######## COMMENTER  DE LA 39 A LA LIGNE 48 POUR TESTER LA SOURIS#################
             
-            if MM.Phrase.EndText == True and MM.Mouse.TabulationEight == False :
-                MM.Mouse.TabulationEight = INSTRU.InstructionForRobot.ClickOnTabulation("t", 8)
+            # if MM.Phrase.EndText == True and MM.Mouse.TabulationEight == False :
+            #     MM.Mouse.TabulationEight = INSTRU.InstructionForRobot.ClickOnTabulation("t", 8)
             
-            if MM.Phrase.EndText == True and MM.Mouse.TabulationEight == True and MM.Mouse.EnterClicked == False:
-                #faire le deplacement vers le button entrer
-                MM.Mouse.EnterClicked = INSTRU.InstructionForRobot.ClickOnEnter()
+            # if MM.Phrase.EndText == True and MM.Mouse.TabulationEight == True and MM.Mouse.EnterClicked == False:
+            #     #faire le deplacement vers le button entrer
+            #     MM.Mouse.EnterClicked = INSTRU.InstructionForRobot.ClickOnEnter()
 
-            if MM.Mouse.EnterClicked == True :
-                print("Le tweet a été fait")
-                MM.Reinitialisation.MyReinitialisation()
-                MM.Phrase.Initialisation(self.pokeApi.give_me_sentence())
+            # if MM.Mouse.EnterClicked == True :
+            #     print("Le tweet a été fait")
+            #     MM.Reinitialisation.MyReinitialisation()
+            #     MM.Phrase.Initialisation(self.pokeApi.give_me_sentence())
 
 
 ####################DECOMMENTER CETTE PARTIE POUR LE TEST DE LA SOURIS######################################
 
-            # if MM.Phrase.EndText == True:
-            #     #Si on a fini de taper notre text on deplacer la souris 
-            #     #Deplacer la souris vers le point initial
-            #     #Aller vers la ou on veut
-            #     #Faire le clic -> Methode a dev mais c'est rapdie normalement
+            if MM.Phrase.EndText == True:
+                #Si on a fini de taper notre text on deplacer la souris 
+                #Deplacer la souris vers le point initial
+                #Aller vers la ou on veut
+                #Faire le clic -> Methode a dev mais c'est rapdie normalement
                 
-            #     #La souris se trouve en A et nous on veut aller en B
-            #     if MM.Mouse.EndMouseMouvement == False : 
-            #         MM.Mouse.EndMouseMouvement = INSTRU.InstructionForRobot.InstructionMouse("a", "b")
-            #     #Ici on va aller vers le + pour faire le clic gauche
-            #     if MM.Mouse.EndMouseMouvement == True and MM.Mouse.LeftClick == False :
-            #         MM.Mouse.LeftClick = INSTRU.InstructionForRobot.ClicGauche("b")
+                #La souris se trouve en A et nous on veut aller en B
+                if MM.Mouse.EndMouseMouvement == False : 
+                    MM.Mouse.EndMouseMouvement = INSTRU.InstructionForRobot.InstructionMouse("a", "b")
+                #Ici on va aller vers le + pour faire le clic gauche
+                if MM.Mouse.EndMouseMouvement == True and MM.Mouse.LeftClick == False :
+                    MM.Mouse.LeftClick = INSTRU.InstructionForRobot.ClicGauche("b")
 
-            #     #Ici on est alle du point A au point B maintenant on aimerait remettre la souris sur le point A
-            #     if MM.Mouse.LeftClick == True :
-            #         MM.Mouse.EndMouseMouvementBis = INSTRU.InstructionForRobot.InstructionMouse("b", "a")
+                #Ici on est alle du point A au point B maintenant on aimerait remettre la souris sur le point A
+                if MM.Mouse.LeftClick == True :
+                    MM.Mouse.EndMouseMouvementBis = INSTRU.InstructionForRobot.InstructionMouse("b", "a")
 
-            #     if MM.Mouse.EndMouseMouvementBis == True :
-            #         print("FIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIINNNNNNNNNNNNNNNNNNNNNNNNNNNNN")
+                if MM.Mouse.EndMouseMouvementBis == True :
+                    print("FIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIINNNNNNNNNNNNNNNNNNNNNNNNNNNNN")
+                    exit()
 
 
 class SendData():

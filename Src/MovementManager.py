@@ -249,21 +249,21 @@ class MouseMouve:
     MousePos = {
         #Lettre A ce sera genre la position initiale
         "a" : {
-            "X" : "471.38",
-            "Y" : "331.20",
-            "Z" : "302.00", 
-            "A" : "172.11",
-            "B" : "-0.25",
-            "C" : "179.86",
+            "X" : "489.39",
+            "Y" : "317.76",
+            "Z" : "296.79", 
+            "A" : "172.04",
+            "B" : "-0.26",
+            "C" : "179.87",
         },
         #Lettre B ce sera la position à atteindre pour le bouton
         "b" : {
-            "X" : "518.73",
-            "Y" : "257.33",
-            "Z" : "302.22", 
-            "A" : "172.11",
-            "B" : "-0.25",
-            "C" : "179.85",
+            "X" : "514.40",
+            "Y" : "268.95",
+            "Z" : "296.79", 
+            "A" : "172.04",
+            "B" : "-0.30",
+            "C" : "179.90",
         },
         #Le signe + sert comme clic gauche
         "+" : {
