@@ -70,8 +70,9 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
                     MM.Mouse.EndMouseMouvementBis = INSTRU.InstructionForRobot.InstructionMouse("b", "a")
 
                 if MM.Mouse.EndMouseMouvementBis == True :
-                    print("FIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIINNNNNNNNNNNNNNNNNNNNNNNNNNNNN")
-                    exit()
+                    print("Le tweet a été fait")
+                    MM.Reinitialisation.MyReinitialisation()
+                    MM.Phrase.Initialisation(self.pokeApi.give_me_sentence())
 
 
 class SendData():
