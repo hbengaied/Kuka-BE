@@ -16,8 +16,8 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
         self.ip = ipclient
         self.port = portClient
         self.clientsocket = clientsocket
-        pokeApi = RM.PokeAPIRequester()
-        MM.Phrase.Initialisation(pokeApi.give_me_sentence())
+        self.pokeApi = RM.PokeAPIRequester()
+        MM.Phrase.Initialisation(self.pokeApi.give_me_sentence())
 
     def run(self): # cette fonction est appelé lorsque kuka a réussi à se connecter
         print("Connexion réussi")
@@ -46,7 +46,9 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
 
             if MM.Mouse.EnterClicked == True :
                 print("Le tweet a été fait")
-                exit()
+                MM.Reinitialisation.MyReinitialisation()
+                MM.Phrase.Initialisation(self.pokeApi.give_me_sentence())
+
 
 ####################DECOMMENTER CETTE PARTIE POUR LE TEST DE LA SOURIS######################################
 
