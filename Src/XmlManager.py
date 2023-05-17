@@ -1,5 +1,4 @@
 import xml.etree.ElementTree as ET
-import TopicTweet
 import os
 
 class XmlManager:
@@ -17,23 +16,6 @@ class XmlManager:
             print("Le fichier a été supprimé avec succès.")
         else:
             print("Le fichier n'existe pas.")
-
-    def GetData(): # cette méthode va me permettre d'obtenir les données du fichier xml
-
-        Tree = ET.parse("input.xml")
-        root = Tree.getroot()
-
-        # les principales données qu'on aura besoin est la localisation donc je donne directement la position actuelle du robot
-        balise_of_position = root[0]
-        attribut_of_this_balsie = balise_of_position.attrib
-        locX = attribut_of_this_balsie["X"]
-
-        arrayOfElement = []
-
-        for element in TopicTweet.get_data_for_tweet.get_data_in_variable("basic")["Description"]:
-            arrayOfElement.append(element)
-
-        return arrayOfElement
 
     @staticmethod
     def SetDataToSend(Data): # Data est un dictionnaire qui va contenir tous ce que xml doit contenir 

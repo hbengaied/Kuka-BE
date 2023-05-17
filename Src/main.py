@@ -1,9 +1,6 @@
 import tkinter
-
-
 import Server as Serv
 import ConnectionManager as CM
-import TopicTweet
 import MovementManager
 import XmlManager as XM
 

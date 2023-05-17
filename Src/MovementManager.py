@@ -1,5 +1,3 @@
-import TopicTweet
-
 class Dictionnarie: # cette classe ne va contenir juste les positions de chaque caractère utilisé
     Dico = {
         "a" : {
@@ -336,3 +334,29 @@ class Mouse:
     TabulationEight = False
     EnterClicked = False
     NombreClickTabulation = 0
+
+class Reinitialisation:
+    def MyReinitialisation() :
+        Phrase.Check = False
+        Phrase.CheckUp = False
+        Phrase.CheckDown = False
+        Phrase.EndText = False
+
+        Mouse.MouseZUpCheck = False
+        Mouse.MouseXandYCheck = False
+        Mouse.MouseZDownCheck = False
+
+        Mouse.MouseXandYCheckBis = False
+        Mouse.MouseZUpCheckBis = False
+        Mouse.MouseZDownCheckBis = False
+
+        Mouse.EndMouseMouvement = False
+        Mouse.EndMouseMouvementBis = False
+
+        Mouse.LeftClick = False
+
+        Mouse.NewTweet = False
+        Mouse.TabulationEight = False
+        Mouse.EnterClicked = False
+        Mouse.NombreClickTabulation = 0
+

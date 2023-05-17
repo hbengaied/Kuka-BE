@@ -7,15 +7,14 @@ class MoveMyZ():
     @staticmethod
     def MoveZDown(lettre):
         try:
-            tree = ET.parse("input.xml") # je parse le fichier xml
-            root = tree.getroot() # je prend la balise root du fichier
-
-            ipoc_balise = "" # cette variable va contenir le timestamps que je devrais renvoyé au kuka
-            for element in root: #pour chaque élement de la balise root, si le tag est IPOC alors je prend ce que contient la balise IPOC
+            tree = ET.parse("input.xml")
+            root = tree.getroot()
+            ipoc_balise = ""
+            for element in root:
                 if element.tag == "IPOC":
                     ipoc_balise = element
 
-            Data = { # j'initialise le dictionnaire de donnée à envoyé au robot, ATTENTION 
+            Data = {
                 "X" : MM.Dictionnarie.Dico[lettre]["X"],
                 "Y" : MM.Dictionnarie.Dico[lettre]["Y"],
                 "Z" : MM.Dictionnarie.Dico[lettre]["Z"], 
@@ -25,8 +24,8 @@ class MoveMyZ():
                 "IPOC" : ipoc_balise.text
             }
 
-            XmlManager.XmlManager.SetDataToSend(Data) # cette fonction sert à initialisé le fichier xml "output.xml"
-            CM.SendData.Send() # et juste aprés, il envoie le fichier xml
+            XmlManager.XmlManager.SetDataToSend(Data)
+            CM.SendData.Send()
             
         except:
             pass
@@ -34,16 +33,16 @@ class MoveMyZ():
     @staticmethod
     def MoveZUp(lettre):
         try:
-            tree = ET.parse("input.xml") # je parse le fichier xml
-            root = tree.getroot() # je prend la balise root du fichier
+            tree = ET.parse("input.xml")
+            root = tree.getroot()
 
-            ipoc_balise = "" # cette variable va contenir le timestamps que je devrais renvoyé au kuka
-            for element in root: #pour chaque élement de la balise root, si le tag est IPOC alors je prend ce que contient la balise IPOC
+            ipoc_balise = ""
+            for element in root:
                 if element.tag == "IPOC":
                     ipoc_balise = element
             PosZ = float(MM.Dictionnarie.Dico[lettre]["Z"]) + 35
             StringPosZ = str(PosZ)
-            Data = { # j'initialise le dictionnaire de donnée à envoyé au robot, ATTENTION 
+            Data = {
                 "X" : MM.Dictionnarie.Dico[lettre]["X"],
                 "Y" : MM.Dictionnarie.Dico[lettre]["Y"],
                 "Z" : StringPosZ,
@@ -53,8 +52,8 @@ class MoveMyZ():
                 "IPOC" : ipoc_balise.text
             }
 
-            XmlManager.XmlManager.SetDataToSend(Data) # cette fonction sert à initialisé le fichier xml "output.xml"
-            CM.SendData.Send() # et juste aprés, il envoie le fichier xml
+            XmlManager.XmlManager.SetDataToSend(Data)
+            CM.SendData.Send()
             
         except:
             pass

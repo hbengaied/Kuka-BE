@@ -5,13 +5,10 @@ import VerificationDest as VD
 import MouvementXandY as MXY
 import MouvementZ as MZ
 
-#declarer les bool dans un autre fichier apres,
-# mais mtn comme j'eris en blind je fais le code et apres j'ameliore
-
 
 class InstructionForRobot():
     @staticmethod
-    #Cette methode permet de deplacer la souris d'un point A à un Point B et contient les verification
+    #Cette methode permet de deplacer la souris d'un point A à un Point B et contient les verifications
     #qu'on a bien effectué le mouvement voulu
     def InstructionMouse(lettrePosOuSeTrouveLaSouris, lettrePosOuOnVeutAllerAvecLaSouris):
 
@@ -53,6 +50,7 @@ class InstructionForRobot():
             MM.Mouse.MouseZUpCheckBis = False
             MM.Mouse.EndMouseMouvement = True
             return True
+
         return False
 
 
@@ -86,6 +84,7 @@ class InstructionForRobot():
             MM.Mouse.MouseXandYCheckBis = False
             MM.Mouse.MouseZUpCheckBis = False
             return True
+
         return False
 
 
@@ -99,7 +98,7 @@ class InstructionForRobot():
         #Si le robot à atteint le x et y voulu on va cliquer sur la touche en bougeant le z
         if MM.Phrase.Check == True  and MM.Phrase.CheckDown == False :
             #Deplacement du robot en Z uniquement
-            print("Je descend !!!")
+            #print("Je descend !!!")
             MZ.MoveMyZ.MoveZDown(MM.Phrase.MyText[MM.Phrase.Compteur])
             MM.Phrase.CheckDown = VD.Verification.VerifKeyClicked(MM.Phrase.MyText[MM.Phrase.Compteur])
 
@@ -213,7 +212,7 @@ class InstructionForRobot():
         if MM.Mouse.MouseZUpCheck == True and MM.Mouse.MouseXandYCheck == True and MM.Mouse.MouseZDownCheck == True and MM.Mouse.MouseZUpCheckBis == False :
             MMZ.MoveMyMouseZ.MoveMouseZUp("new")
             MM.Mouse.MouseZUpCheckBis = VD.Verification.VerifGoUpMouse("new")
-            print("JE REMONTE")
+            # print("JE REMONTE")
 
         #Ici si le mouvement voulu a été fait et que le bras c'est relevé on reinitialise tout
         if MM.Mouse.MouseZUpCheckBis == True :
