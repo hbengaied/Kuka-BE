@@ -1,0 +1,79 @@
+% ICI je vais faire un rappel théorique du projet
+% Je vais aussi parler du matériel utilisé, des contrainte et enfin des étapes qu'on a dû réalisé
+\section{Introduction}
+
+Notre projet consiste à programmer un robot KUKA de telle sorte qu'il puisse écrire sur un clavier seul.
+
+
+\subsection{KUKA}
+
+\lettrine[nindent=0em,lines=3]{D}ans le cadre de mon projet d'étude, on a développé un système permettant à un bras mécanique KUKA de taper des choses sur un clavier.
+L'automatisation des tâches est devenue essentielle dans de nombreux domaines, et l'utilisation de bras mécaniques offre de vastes possibilités pour améliorer l'efficacité et la précision des processus.
+\\
+\\
+Kuka est avant tout une entreprise de robotique.
+C'est une société mondiale d'automatisation.
+Le siège de la société se trouve en Allemagne.
+%------------------------------------------------
+
+\section{Description des différentes parties du projet}
+
+Lors de ce projet, nous sommes passer par plusieurs étapes.
+Voici une description brève des étapes ;
+
+\begin{itemize}
+    \item Maintenir une connexion avec le robot.
+    \item Configurer ses entrés pour qu'il puisse recevoir des coordonnées.
+    \item Programmer en KRL afin qu'il puisse utilisé ses entrés et procéder à des mouvements.
+    \item Bouger le robot avec les coordonnées envoyées.
+    \item Prendre les coordonnées des touches du clavier.
+    \item Bouger le robot pour qu'il puisse taper sur le clavier juste en lui donnant la phrase à taper.
+    \item Initialiser les étapes à suivre pour que le robot sache ou appuyer pour réaliser un post.
+\end{itemize}
+
+
+%------------------------------------------------
+\section{Matériel et Méthode}
+
+Les outils utilisés sont les suivants ;
+
+\begin{itemize}
+    \item Un robot KUKA bien évidement.
+    \item Un ordinateur.
+    \item Un clavier mécanique.
+    \item Un support pour le clavier.
+\end{itemize}
+
+En ce qui concerne le language utilisé lors de ce projet.
+On a dû utiliser deux languages de programmation, \textbf{Python} et le \textbf{KRL}.
+\\
+\\
+Python a été utilisé pour instancié le serveur.
+Ce serveur permet de maintenir la connexion, recevoir/envoyer des coordonnées, vérifier des coordonnées et séquencer la phrase que le robot doit taper.
+Les informations que le serveur envoie au robot est sous format \textbf{XML}.
+\\
+\\
+Le KRL permet de se connecter au serveur et d'utiliser les informations que le serveur lui envoie.
+Pour que le connexion se fasse, le programme a besoin d'information tels que l'adresse ip et le port du serveur.
+Ces informatios se retrouve dans un fichier XML.
+Ce fichier possède aussi d'autres informations tels que les données en entrés et en sortie du robot.
+\\
+\\
+Et en ce qui concerne le support de clavier, ce support est obligatoire en vue de respecter la zone de travail du robot.
+En effet, le robot possède une zone de travail.
+Lorsque le robot est hors de cette zone, le robot est inutillisable.
+Cette zone permet d'avoir une sécurité.
+Elle permet en autre d'éviter que le robot soit en conatct avec le plan de travail par exemple.
+
+\subsection{Connexion}
+
+YOUSRI
+
+\subsection{Mouvement}
+
+HICHEME
+
+\subsection{Twitter}
+
+HICHEME
+
