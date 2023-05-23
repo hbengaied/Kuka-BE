@@ -38,10 +38,10 @@ Voici une description brève des étapes ;
 Les outils utilisés sont les suivants ;
 
 \begin{itemize}
-    \item Un robot KUKA bien évidement.
-    \item Un ordinateur.
-    \item Un clavier mécanique.
-    \item Un support pour le clavier.
+    \item Un robot KUKA
+    \item Un ordinateur
+    \item Un clavier mécanique
+    \item Un support pour le clavier
 \end{itemize}
 
 En ce qui concerne le language utilisé lors de ce projet.
@@ -67,7 +67,82 @@ Elle permet en autre d'éviter que le robot soit en conatct avec le plan de trav
 
 \subsection{Connexion}
 
-YOUSRI
+En ce qui concerne la connexion.
+Le robot est connecté en \textbf{VLAN}.
+Donc, il n'est pas directement lié au réseau.
+Pour pouvoir communiquer avec celui-ci, on est obligé de se connecte au VLAN.
+\\
+\\
+Lorsque la communication entre le serveur et le robot est assurés, on peut passer à l'étape suivante qui consiste à créer un fichier XML.
+Ce fichier XML contiendra toute les informations afin d'assurer la connexion.
+Comme par exemple, l'adresse ip du serveur, le port que le serveur utilise et le protocol utilisé pour communiquer.
+\\
+\\
+Et enfin, lorsque le fichier XML est bien configuré, on peut passer au programme KRL.
+On a crée un objet \textbf{RSI} de type \textbf{ST\_ETHERNET}.
+Cette objet spécifique au language \textbf{KRL} permettra d'initialisé la connexion.
+Lorsque la connexion a été établie, le robot commence par envoyé le premier fichier XML au serveur.
+Ce premier fichier contiendra des informations comme les coordonnées, mais aussi un \textbf{IPOC}.
+Cette valeur est composée de chiffre.
+Elle devra être renvoyé au robot selon un temps impartie.
+Si cette valeur n'est pas renvoyé dans les plus bréves délais, alors la connexion s'interromt.
+
+\subsection{Configuration du fichier XML}
+
+Comme expliqué précédement, le fichier XML permet de configuré la connexion du robot au serveur.
+Toutefois, ce fichier contient d'autre informations.
+Voyons voir de plus près l'architecture de ce fichier.
+\\
+\\
+La balise racine de ce fichier se nomme "\textbf{ROOT}".
+Dans la balise racine se trouve 3 autres balises.
+Il y a une balise qui se nomme "\textbf{CONFIG}", une autre "\textbf{SEND}" et la dernière s'appelle "\textbf{RECEIVE}".
+\\
+\\
+La balise \textbf{CONFIG} va permettre de configurer les paramètres de communication.
+On va y retrouver 6 autres balises ;
+\begin{itemize}
+    \item "\textbf{IP\_NUMBER}" contenant l'addresse IP du serveur.
+    \item "\textbf{PORT}" permettant d'avoir le port utilisé par le serveur.
+    \item "\textbf{PROTOCOL}" qui défini le protocole utilisé pour la communication. On a deux types de protocoles utilisable, on a le droit d'utiliser le protocole \textbf{TCP} ou \textbf{UDP}.
+    \item "\textbf{SENDTYPE}" est l'identifieur du système externe. Cette valeur va être identifier pour chaques paquets reçu au robot.
+    \item "\textbf{PROTOCOLLENGTH}" est une balise permettant d'activier la transmission de la longueur de byte du protocole. Elle n'a que deux valeurs possibles ("\textbf{ON}" ou "\textbf{OFF}").
+    \item Et enfin, la balise "\textbf{ONLYSEND}" permet de définir la direction des échanges de donnée. Elle peut être mis à "\textbf{TRUE}", ceci permet au robot d'envoyer des données mais pas d'en recevoir. Tandis que, lorsqu'il est mis à "\textbf{FALSE}", alors le système peut envoyer et recevoir des données. 
+\end{itemize}
+Concernant la balise \textbf{PROTOCOLLENGTH}, il a été initialisé à \textbf{OFF} et la balise \textbf{ONLYSEND} a été initialisé à \textbf{FALSE}.
+\\
+\\
+Ensuite, la balise \textbf{SEND} permet de définir ce que le robot peut envoyer.
+Cette balise contient une sous-balise "\textbf{ELEMENTS}" qui en contient aussi une autres sous-balise "\textbf{ELEMENT}".
+La balise \textbf{ELEMENT} a des attributs tels que ;
+\begin{itemize}
+    \item \textbf{TAG} est le nom du tag qui sera généré par le robot.
+    \item \textbf{TYPE} est le type de donnée.
+    \item \textbf{INDX} est le numéro de sorite de l'objet.
+    \item Et enfin, \textbf{UNIT} est l'unité utilisé pour la donnée.
+\end{itemize}
+Pour ce projet, j'ai juste besoin des coordonnées du robot.
+Le système possède déjà un objet préconfiguré qui se nomme "\textbf{DEF\_RIst}".
+C'est dans l'attribut \textbf{TAG} où on précise le nom de cette objet.
+Le type de cette objet est un \textbf{DOUBLE}, le numéro de sortie est \textbf{INTERNAL} et l'unité est \textbf{0}.
+\\
+\\
+Remarque, il existe plein d'autres mots-clés comme \textbf{DEF\_RSol} (envoie les commandes de positions cartésienne), ou le \textbf{DEF\_MACur} (envoie les courants moteur du robot de l'axe A1 à A6).
+\\
+\\
+Et enfin, la balise \textbf{RECEIVE} est la balise qui définie la sortie du robot.
+Cette balise à la même architecture que la balise \textbf{SEND}.
+Toutefois, la balise \textbf{ELEMENT} contient un attribut en plus, c'est le \textbf{HOLDON}.
+Ce nouveau attribut va définir le comportement de l'objet reçu au robot lorsque celle-ci à une erreur.
+Elle a deux valeurs possibles ;
+\begin{itemize}
+    \item \textbf{0} permet de réinitialisé la veleurs reçu.
+    \item \textbf{1} permet de maintenir l'ancienne valeur valide alors que la nouvelle valeur a une erreur.
+\end{itemize}
+Dans ce projet, tous les eléments ont un \textbf{HOLDON} à \textbf{1} afin d'assurer une localisation toujour valide.
+\\
+\\
+Passons maintenant dans le language KRL,
 
 \subsection{Mouvement}
 
