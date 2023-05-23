@@ -17,7 +17,7 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
         self.port = portClient
         self.clientsocket = clientsocket
         self.pokeApi = RM.PokeAPIRequester()
-        MM.Phrase.Initialisation("hicheme")
+        MM.Phrase.Initialisation(self.pokeApi.give_me_sentence())
 
     def run(self): # cette fonction est appelé lorsque kuka a réussi à se connecter
         print("Connexion réussi")
