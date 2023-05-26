@@ -4,6 +4,9 @@ import xml.etree.ElementTree as ET
 import XmlManager
 
 class MoveMyMouseZ():
+    #Methode qui permet de faire descendre le bras dans le troue crée spécialement dans le boitier de la souris
+    #Cette dernière prend une "lettre" qui contient les coords de la souris
+    #Cette méthode est appelée une fois que l'on se trouve exactement au dessus de la souris
     @staticmethod
     def MoveMouseZDown(lettre):
         try:
@@ -30,6 +33,9 @@ class MoveMyMouseZ():
         except:
             pass
 
+    #Methode qui permet de faire monter le bras depuis le troue dans le boitier de la souris
+    #Cette dernière prend une "lettre" qui contient les coords de la souris ou se trouve bras
+    #Cette méthode est appelée lorsqu'on veut quitter la souris
     @staticmethod
     def MoveMouseZUp(lettre):
         try:
