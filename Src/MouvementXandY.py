@@ -4,6 +4,10 @@ import XmlManager
 import xml.etree.ElementTree as ET
 
 class MouveMyXandY():
+    # Methode qui permet de déplacer le bras en X et en Y uniquement
+    #Cette méthode prend en arguement une lettre qui qui correspond à la position de la lettre sur le clavier.
+    #On peut voir que on ajoute toujours +35 au Z de la position afin que le robot ait une marge de sécurité avec
+    #le clavier lors du déplacement
     @staticmethod
     def MouveXandY(lettre):
         try:
