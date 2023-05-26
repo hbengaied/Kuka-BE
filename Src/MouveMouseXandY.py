@@ -7,6 +7,10 @@ class MouveMyMouseXandY():
     @staticmethod
     #Si on veut que la souris aille à la position originale on lui donnera la lettre a
     # sinon pour l'endroit ou le boutton publier se trouve envoyer la touche b
+    # Methode qui permet de déplacer la souris en X et en Y uniquement
+    #Cette méthode prend en arguement une "lettre" qui est la position de la où se trouve la souris.
+    #La variable monint, lui correspond à la hauteur en Z du bras, car cette méthode sert à 2 choses,
+    #aller à la souris et la déplacer d'un point A à un point B
     def MouseMouvementXandY(lettre, monint):
         try:
             tree = ET.parse("input.xml")
