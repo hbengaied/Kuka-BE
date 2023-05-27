@@ -3,6 +3,9 @@ import MovementManager as MM
 
 
 class Verification():
+    #Cette méthode vérifie que le bras se trouve bien au dessus de la touche du clavier
+    #que l'on veut appuyer, dans le if on vérifie que le X et le Y du robot, et que le x et le y
+    #de la touche à appuyer on une différence de 0.3mm max
     @staticmethod
     def VerifXandY(lettre):
         try:
@@ -31,6 +34,9 @@ class Verification():
             pass
         return False
 
+    #Cette méthode vérifie que le bras a bien appuyé sur la touche du clavier
+    #dans le if on vérifie que le X,Y et le Z du robot, et que le x,y et z
+    #de la touche qui vient d'être appuyé on une différence de 0.3mm max
     @staticmethod
     def VerifKeyClicked(lettre):
         try:
@@ -57,6 +63,10 @@ class Verification():
             pass
         return False
 
+    #Cette méthode vérifie que le bras c'est bien levé après avoir appuyé sur la touche du clavier
+    #dans le if on vérifie que le X,Y et le Z du robot, et que le x,y et z
+    #de la touche qui vient d'être appuyé on une différence de 0.3mm max
+    #Cependant on ajoute +35 au Z de la touche afin que le robot se lève d'une distance minimal et max afin d'avoir une sécurité
     @staticmethod
     def VerifGoUp(lettre):
         try:
@@ -83,6 +93,10 @@ class Verification():
             pass
         return False
 
+    #Cette méthode vérifie que le bras c'est bien levé quand on sort de la souris
+    #dans le if on vérifie que le X,Y et le Z du robot, et que le x,y et z
+    #de la souris on une différence de 0.3mm max
+    #Cependant on ajoute +100 au Z de la souris afin que le robot se léve d'une distance minimal et max afin d'avoir une sécurité
     @staticmethod
     def VerifGoUpMouse(lettre):
         try:
@@ -110,6 +124,9 @@ class Verification():
             pass
         return False
 
+    #Cette méthode vérifie que le bras est bien entré dans la souris
+    #dans le if on vérifie que le X,Y et le Z du robot, et que le x,y et z
+    #de la souris on une différence de 0.3mm max
     @staticmethod
     def VerifGoDownMouse(lettre):
         try:
@@ -136,6 +153,9 @@ class Verification():
             pass
         return False
     
+    #Cette méthode est utilisé pour vérifier que l'on est au dessus de la souris
+    #dans le if on vérifie que le X,Y du robot et que le x,y de la souris
+    #on une différence de 0.3mm
     @staticmethod
     def VerifXandYMouse(lettre):
         try:
