@@ -21,16 +21,17 @@ class ReceiveThread(threading.Thread): # cette classe servira principalement à 
 
     def run(self): # cette fonction est appelé lorsque kuka a réussi à se connecter
         print("Connexion réussi")
-        # je vais commencer à attendre la réception de donnée
+        # attente de la réception de donnée
         while True:
             self.data_received = self.clientsocket.recv(1024)
             f = open("input.xml","w")
             f.write(bytes.decode(self.data_received))
             f.close() # je m'assure que le fichier est bien fermé et donc que l'écriture est terminé avant de commencer à répondre au robot
             
-
+            #Ouverture de l'espace de tweet pour écrire
             if MM.Mouse.NewTweet == False :
                 MM.Mouse.NewTweet = INSTRU.InstructionForRobot.OpenWritingSpace()
+            #On commence à écrire
             #Si on a pas fini de taper notre text on va entrer uniquement dans le if
             if MM.Mouse.NewTweet == True and MM.Phrase.EndText == False :
                 INSTRU.InstructionForRobot.InstructionClavier()

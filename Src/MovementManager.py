@@ -245,6 +245,7 @@ class Dictionnarie: # cette classe ne va contenir juste les positions de chaque 
 
     }
 
+#Ce dico contient les coord utilisé pour la souris
 class MouseMouve: 
     MousePos = {
         #Lettre A ce sera genre la position initiale
@@ -274,6 +275,7 @@ class MouseMouve:
             "B" : "-0.17",
             "C" : "179.78",
         },
+        #tabulation
         "t" : {
             "X" : "664.90",
             "Y" : "193.95",
@@ -282,6 +284,7 @@ class MouseMouve:
             "B" : "-0.14",
             "C" : "179.77",
         },
+        #touche entrer
         "enter" : {
             "X" : "664.86",
             "Y" : "-64.60",
@@ -290,6 +293,7 @@ class MouseMouve:
             "B" : "-0.15",
             "C" : "179.77",
         },
+        #touche N pour ouvrir l'espace d'écriture sur twitter
         "new" : {
             "X" : "628.82",
             "Y" : "61.14",
@@ -301,6 +305,7 @@ class MouseMouve:
     }
 
 
+#Classe pour le clavier
 class Phrase:
     MyText = ""
     Compteur = 0

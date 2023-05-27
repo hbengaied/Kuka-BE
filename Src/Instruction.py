@@ -53,7 +53,7 @@ class InstructionForRobot():
 
         return False
 
-
+    #Cette méthode permet de faire un clic gauche, c'est à dire appuyer sur la touche +
     def ClicGauche(lettrePosOuSeTrouveLaSouris):
         #Etape 1 Monter en Z pour Sortir de la souris
         if MM.Mouse.MouseZUpCheck == False :
@@ -71,12 +71,12 @@ class InstructionForRobot():
             MMZ.MoveMyMouseZ.MoveMouseZDown("+")
             MM.Mouse.MouseZDownCheck = VD.Verification.VerifGoDownMouse("+")
 
-        #Etape 4 Remonter -> Il faut un autre boolen
+        #Etape 4 Remonter le bras 
         if MM.Mouse.MouseZUpCheck == True and MM.Mouse.MouseXandYCheck == True and MM.Mouse.MouseZDownCheck == True and MM.Mouse.MouseZUpCheckBis == False :
             MMZ.MoveMyMouseZ.MoveMouseZUp("+")
             MM.Mouse.MouseZUpCheckBis = VD.Verification.VerifGoUpMouse("+")
 
-        #Ici si le mouvement voulu a été fait et que le bras c'est relevé on reinitialise tout
+        #Ici si le mouvement voulu a été fait et que le bras c'est relevé on reinitialise tout et on return un true 
         if MM.Mouse.MouseZUpCheckBis == True :
             MM.Mouse.MouseZUpCheck = False
             MM.Mouse.MouseXandYCheck = False
@@ -87,7 +87,8 @@ class InstructionForRobot():
 
         return False
 
-
+    #Cette methode permet de faire au robot écrire sur le clavier, et contient les verifications
+    #qu'on a bien effectué le mouvement voulu
     def InstructionClavier():
         if MM.Phrase.Check == False :
                 #Je donne les coord au robot en x et y auquel il doit se deplacer
@@ -108,7 +109,7 @@ class InstructionForRobot():
             MZ.MoveMyZ.MoveZUp(MM.Phrase.MyText[MM.Phrase.Compteur])
             MM.Phrase.CheckUp = VD.Verification.VerifGoUp(MM.Phrase.MyText[MM.Phrase.Compteur])
             
-            #Je vais passer caractere suivant    
+        #Passage au caractère suivant de la phrase à écrire  
         if MM.Phrase.CheckUp == True and MM.Phrase.Check == True and MM.Phrase.CheckDown == True :
             MM.Phrase.Compteur = MM.Phrase.Compteur +1
             MM.Phrase.Check = False
@@ -121,6 +122,7 @@ class InstructionForRobot():
                 MM.Mouse.EndMouseMouvement = False
                 MM.Mouse.EndMouseMouvementBis = False
 
+    #Cette méthode va permettre d'appuyer sur la touche tabulation afin de nous permettre de tweeter 
     def ClickOnTabulation(lettrePosOuSeTrouveLaSouris, NbOfClicks):
         #Etape 1 Monter en Z pour Sortir de la souris
         if MM.Mouse.MouseZUpCheck == False :
@@ -158,6 +160,7 @@ class InstructionForRobot():
 
         return False
 
+    #Cette méthode va nous permettre de cliquer sur la touche entrer afin d'envoyer le tweet
     def ClickOnEnter():
         #Etape 1 Monter en Z pour Sortir de la souris
         if MM.Mouse.MouseZUpCheck == False :
@@ -170,12 +173,12 @@ class InstructionForRobot():
             MM.Mouse.MouseXandYCheck = VD.Verification.VerifXandYMouse("enter")
 
         #Etape 3 appuyer sur le bouton
-        #Si on est au dessus du + on descend en Z pour se placer dans la souris
+        #Si on est au dessus de la touche enter on descend en Z pour se placer dans la souris
         if MM.Mouse.MouseZUpCheck == True and MM.Mouse.MouseXandYCheck == True and MM.Mouse.MouseZDownCheck == False:
             MMZ.MoveMyMouseZ.MoveMouseZDown("enter")
             MM.Mouse.MouseZDownCheck = VD.Verification.VerifGoDownMouse("enter")
 
-        #Etape 4 Remonter -> Il faut un autre boolen
+        #Etape 4 Remonter
         if MM.Mouse.MouseZUpCheck == True and MM.Mouse.MouseXandYCheck == True and MM.Mouse.MouseZDownCheck == True and MM.Mouse.MouseZUpCheckBis == False :
             MMZ.MoveMyMouseZ.MoveMouseZUp("enter")
             MM.Mouse.MouseZUpCheckBis = VD.Verification.VerifGoUpMouse("enter")
@@ -191,24 +194,26 @@ class InstructionForRobot():
 
         return False
 
+    #Cette méthode va cliquer sur la touche N u e fois sur twitter, c'est un raccourci clavier pour
+    #ouvrir la zone de tweet
     def OpenWritingSpace() :
         #Etape 1 Monter en Z pour Sortir de la souris
         if MM.Mouse.MouseZUpCheck == False :
             MMZ.MoveMyMouseZ.MoveMouseZUp("new")
             MM.Mouse.MouseZUpCheck = VD.Verification.VerifGoUpMouse("new")
 
-        #Etape 2 Se diriger vers le bouton +
+        #Etape 2 Se diriger vers la touche N
         if MM.Mouse.MouseZUpCheck == True and MM.Mouse.MouseXandYCheck == False:
             MMXY.MouveMyMouseXandY.MouseMouvementXandY("new", 100)
             MM.Mouse.MouseXandYCheck = VD.Verification.VerifXandYMouse("new")
 
         #Etape 3 appuyer sur le bouton
-        #Si on est au dessus du + on descend en Z pour se placer dans la souris
+        #Si on est au dessus de N on descend en Z pour se placer dans la souris
         if MM.Mouse.MouseZUpCheck == True and MM.Mouse.MouseXandYCheck == True and MM.Mouse.MouseZDownCheck == False:
             MMZ.MoveMyMouseZ.MoveMouseZDown("new")
             MM.Mouse.MouseZDownCheck = VD.Verification.VerifGoDownMouse("new")
 
-        #Etape 4 Remonter -> Il faut un autre boolen
+        #Etape 4 Remonter
         if MM.Mouse.MouseZUpCheck == True and MM.Mouse.MouseXandYCheck == True and MM.Mouse.MouseZDownCheck == True and MM.Mouse.MouseZUpCheckBis == False :
             MMZ.MoveMyMouseZ.MoveMouseZUp("new")
             MM.Mouse.MouseZUpCheckBis = VD.Verification.VerifGoUpMouse("new")
