@@ -64,6 +64,10 @@ En effet, le robot possède une zone de travail.
 Lorsque le robot est hors de cette zone, le robot est inutillisable.
 Cette zone permet d'avoir une sécurité.
 Elle permet en autre d'éviter que le robot soit en conatct avec le plan de travail par exemple.
+\\
+\\
+Remarque, la phrase que le robot devra taper ne doit pas être longue.
+Si la phrase est trop longue à écrire, le temps pour que le robot tape la phrase est prolongé.
 
 \subsection{Connexion}
 
@@ -113,7 +117,8 @@ Concernant la balise \textbf{PROTOCOLLENGTH}, il a été initialisé à \textbf{
 \\
 \\
 Ensuite, la balise \textbf{SEND} permet de définir ce que le robot peut envoyer.
-Cette balise contient une sous-balise "\textbf{ELEMENTS}" qui en contient aussi une autres sous-balise "\textbf{ELEMENT}".
+Cette balise contient une sous-balise "\textbf{ELEMENTS}".
+Cette balise conteint aussi d'autres balises "\textbf{ELEMENT}".
 La balise \textbf{ELEMENT} a des attributs tels que ;
 \begin{itemize}
     \item \textbf{TAG} est le nom du tag qui sera généré par le robot.
@@ -140,15 +145,119 @@ Elle a deux valeurs possibles ;
     \item \textbf{1} permet de maintenir l'ancienne valeur valide alors que la nouvelle valeur a une erreur.
 \end{itemize}
 Dans ce projet, tous les eléments ont un \textbf{HOLDON} à \textbf{1} afin d'assurer une localisation toujour valide.
+
+\subsection{Programmation en KRL}
+
+Passons maintenant dans le language KRL, on va définir les différents principes et outils utilisés dans le programme.
 \\
 \\
-Passons maintenant dans le language KRL,
+Au début du programme, on commence d'abord par déclaré les variables utiles.
+Une variable de type \textbf{RSIERR} est déclaré.
+Cette variable permet, en autre, de récupérer la réponse d'une commande.
+Des variables de type \textbf{INT} seront utilisées afin de stocker des entiers.
+Il y aura un entier (nommé \textbf{hEthernet}) contenant l'identifiant de l'objet permettant l'accés à l'objet \textbf{RSI}.
+Cette valeur est automatiquement assigné par le système lorsque l'objet RSI est créer.
+D'autres entiers seront utilisés pour identifié l'objet RSI.
+Et enfin, une variable de type \textbf{FRAME} sera déclaré.
+C'est une variable permettant de faire la liaison avec le capteur de coordonnée du système.
+Elle permet notemment de changer les coordonnées selon des nouvelles coordonnées reçu par le robot.
+\\
+\\
+Lorsque les déclarations de variables sont terminées.
+On peut alors passer à la configuration de l'objet \textbf{RSIERR} avec des méthodes mises à dispositions.
+\\
+\\
+La communication entre le controlleur du robot et un système externe est implémenté en utilisant l'objet \textbf{RSI ST\_ETHERNET}.
+Cette objet doit être crée et configuré dans le programme KRL afin de établir la communication.
+Pour activer la communication entre ces systèmes, l'utilisateur doit créer et configurer le fichier XML.
+Ce fichier de configuration est spécifié et charger lorsque l'objet RSI ST\_ETHERNET est crée.
+Cette objet prend trois paramètres.
+\\
+\\
+Le premier paramètre est l'identifiant de l'objet permettant l'accés à l'objet \textbf{RSI}.
+Dans notre cas, cette variable est appellé \textbf{hEthernet}.
+\\
+\\
+Le deuxième paramètre est un entier correspondant au nombre de containeur dans lequel l'objet RSI est crée.
+Nous ne voulons pas créer de containeur, on va donc précisé qu'aucun containeur doit être crée.
+\\
+\\
+Et enfin, le troisème paramétre est le chemin d'accés vers le fichier de configuration XML. 
+\\
+\\
+L'objet RSI ST\_ETHERNET peut être configurer à l'aide de la commande \textbf{ST\_SETPARAM}.
+La seule configuration faite concerne le nombre maximum de paquet de donnée pouvant arrivé en retard au controlleur du robot.
+Ce paramètre se nomme \textbf{eERXmaxLatePackages} et on a définie ce nombre maximum à 500.
+Ce qui signifie que 500 est le nombre maximum de paquet de donnée qui peut être en retard.
+\\
+\\
+Lorsque la partie concernant la connexion est terminé, on peut commencer à mapper les entrés de données du robot.
+Pour réaliser cela, on utilise l'objet \textbf{RSI ST\_MAP2SEN\_PREA}.
+Cette objet permet donc de rendre disponible la lecture de donnée que le système externe envoie.
+Il prend cinq paramètres ;
+\begin{itemize}
+    \item Le premier paramètre est l'identifiant de l'objet. C'est donc un entier. Dans le programme KRL, il sera nommé \textbf{hMap2Prea}.
+    \item Le deuxième paramètre est le numéro du containeur de l'objet RSI, dans notre cas, c'est le containeur 0.
+    \item Le troisème paramètre est l'identifiant de l'objet permettant l'accés à l'objet \textbf{RSI} (hEthernet).
+    \item Ensuite, le quatrième paramètre est l'index de la source de signal. Ceci est directement lié à la configuration du fichier XML, dans la balise \textbf{RECEIVE}.
+    \item Et enfin, le cinquième paramètre est l'indice de la variable de système \textbf{\$SEN\_PREA[]}.
+\end{itemize}
+Remarque importante, les variables seront accessible avec la variables du système \textbf{\$SEN\_PREA[X]}.
+Où le terme "X" est l'indice qu'on utilise pour accéder à la variable reçu.
+\\
+\\
+Pour la sécurité du matériel, on active un cycle de correction.
+Ce cycle permet de corrigé les mouvements selon le système de référence qu'on utilise.
+On utilise le système \textbf{\#WORLD}.
+Pour activé cette correction, on utilise la commande \textbf{ST\_ON1(\#WORLD,1)}.
+\\
+\\
+On peut enfin passer dans la création d'une boucle permettant de récupérer les nouvelles coordonnées envoyé par le système extenre.
+Dans cette boucle, on utilise la variable de type \textbf{FRAME}.
+Cette variable va contenir les nouvelles coordonnées à l'aide de la variable \textbf{\$SEN\_PREA[X]}.
+Lorsque les coordonnées sont initialisées, alors on peut procéder à un mouvement de type \textbf{PTP} (Point To Point).
+Ce type de mouvement point par point ne permet pas d'avoir un mouvement linéaire.
+Il permet juste de passer à un point dans l'espace qu'on définie avec une coordonnée.
 
 \subsection{Mouvement}
 
-HICHEME
+Dans cette partie, nous allons discuter des différents types de mouvements effectués par le bras Kuka afin de répondre aux différents besoins de notre projet. 
+Les mouvements que nous allons aborder vont permettre d'écrire sur le clavier et de publier le tweet.
+
+\subsubsection{Mouvement clavier}
+
+Le mouvement du clavier a été décomposé en 3 parties.
+La première étape consiste à se positionner au-dessus de la touche à écrire.
+Le bras Kuka se déplace en X et Y uniquement pour cette phase. 
+Une fois positionné au-dessus de la touche, le bras effectue un déplacement en Z pour appuyer sur la touche. 
+Après avoir pressé la touche, le bras effectue à nouveau un déplacement en Z pour se retirer de la touche. 
+Ce cycle est répété jusqu'à ce que le bras ait fini d'écrire la phrase souhaitée.
+Les coordonnées de chaque touche sont stockées dans un dictionnaire appelé "Dico" dans le fichier MovementManager.py.
+Ces coordonnées sont transmises au robot en fonction de la touche à écrire.
+Elles permettent également d'effectuer plusieurs vérifications en comparant la position à atteindre et la position actuelle du bras :
+
+\begin{enumerate}
+    \item Vérifier que le robot se trouve bien au-dessus de la touche concernée.
+    \item Vérifier que le robot a bien appuyé sur la touche du clavier.
+    \item Vérifier que le robot s'est bien relevé après l'appui.
+\end{enumerate}
+
+Ces comparaisons permettent de garantir la précision et l’exactitude des mouvements à
+effectuer par le bras Kuka lors de l’écriture sur le clavier.
+
+\subsubsection{Soumission du tweet}
+
+Une fois la phrase entièrement écrite, le robot doit maintenant soumettre le tweet.
+Pour cela, nous utilisons la touche de tabulation huit fois afin de sélectionner le bouton "Tweet".
+Une fois ce bouton sélectionné, nous ordonnons au robot de se diriger vers la touche "Enter" du clavier et d'appuyer dessus pour soumettre notre tweet.
+Les coordonnées de la touche "Enter" et "Tabulation" sont également stockées dans un dictionnaire appelé "MousePos", qui se trouve dans le fichier MovementManager.py.
+Les mêmes vérifications que celles effectuées pour l'écriture sur le clavier sont appliquées pour soumettre le tweet.
+Une fois notre tweet soumis, le robot peut écrire un autre message s'il le souhaite en répétant le même schéma.
 
 \subsection{Twitter}
 
-HICHEME
+Lors du lancement du programme, le robot va directement appuyer sur la touche "N".
+Cette touche est un raccourci proposé par Twitter pour ouvrir rapidement et facilement la fenêtre d'écriture des tweets.
+Les coordonnées permettant d'utiliser cette option sont stockées dans le dictionnaire "MousePos" sous le nom de "new", situé dans le fichier MovementManager.py.
+Une fois la fenêtre ouverte, le robot va commencer à rédiger son tweet, puis le soumettre.
 

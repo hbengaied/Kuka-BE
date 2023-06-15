@@ -23,7 +23,6 @@
 \usepackage{lipsum} % Package to generate dummy text throughout this template
 
 \usepackage{graphicx}
-
 \usepackage[sc]{mathpazo} % Use the Palatino font
 \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
 \linespread{1.05} % Line spacing - Palatino needs more space between lines
@@ -66,7 +65,7 @@
 \large
 \textsc{Yousre Ouali \& Hicheme BEN GAIED}\\
 \normalsize HE2B: ISIB \\ % Your institution
-\normalsize \href{mailto:54667@etu.he2b.be}{54667@etu.he2b.be} % Your email address
+\normalsize \href{mailto:54667@etu.he2b.be}{54667@etu.he2b.be} \& \href{mailto:58930@etu.he2b.be}{58930@etu.he2b.be} % Your email address
 \vspace{-5mm}
 }
 \date{}
@@ -101,15 +100,37 @@
 
 \section{Problème rencontré}
 
-HICHME
+Durant notre projet, nous avons rencontré un problème lié à l'utilisation de la souris par le bras.
+En effet, notre objectif était d'utiliser la souris pour déplacer le curseur vers le bouton "Tweet" afin de soumettre le tweet rédigé par le robot, au lieu d'utiliser les huit tabulations.
+Pour cela, nous avons développé un boîtier adapté à la tête du robot et implémenté le code nécessaire pour cette fonctionnalité.
+Lors de nos tests, cela fonctionnait très bien, mais lorsque nous sommes passés en mode T2, qui permet au robot d'aller plus vite, un problème majeur et évident est apparu.
+La distance parcourue par le curseur variait en fonction de la vitesse.
+Malheureusement, nous n'avions pas eu la possibilité de calibrer la souris avec le mode T2, car nous ne disposions pas de la clé nécessaire pour activer ce mode.
+Nous pensons toutefois qu'il est possible de résoudre ce problème en ajoutant du code dans le fichier contenant les instructions KRL, de manière à imposer une vitesse au robot lors de l'utilisation de la souris.
+\\
+\\
+Cependant, par manque de temps, nous avons finalement opté pour la méthode des
+tabulations et de la touche Enter afin de publier nos tweets.
 
 \section{Résultat final}
 
-YOUSRI
+Le résultat est que le robot KUKA tape sur les touches du clavier selon la phrase qu'on fournie au sysème externe.
+Dans notre cas, on a fait en sorte que le serveur (système externe) fasse une requête à une API.
+Cette API donne des informations sur les évolutions des \textbf{POKEMON}.
+\\
+\\
+Le robot a aussi la possibilité de bouger la souris pour soumettre un Tweet.
+Ce type de mouvement ne peut se faire qu'au niveau T1 du bras mécanique.
 
 \section{Améliorations possibles}
 
-YOUSRI
+Les améliorations sont nombreuses comme ;
+\begin{enumerate}
+    \item Équipé le robot d'une caméra, afin qu'il puisse reconnaître les lettres dans le clavier. Cela serait utile afin d'éviter d'écrire toutes les coordonnées de chaque lettre du clavier.
+    \item Équipé le bout du robot avec un moteur qui viendait taper sur la touche du clavier en peu de temps. Ceci permettrai d'éviter les mouvements sur l'axe Z du robot. Et donc, la rédaction de la phrase serait plus rapide.
+    \item Générer des phrases avec une IA. Cette amélioration a été travailler mais sans succés. Le problème est qu'il faut payer pour avoir un quotas. Ce quotas est le nombre de requête qu'on peut envoyé à l'IA. Cette amélioration permettrai d'avoir une large gamme de sujet et des phrases différentes à chaque tweet.
+    \item Et enfin, équilibré le mouvement de la souris avec le niveau T2 du robot KUKA.
+\end{enumerate}
 
 \input{bibliographie.tex}
 
