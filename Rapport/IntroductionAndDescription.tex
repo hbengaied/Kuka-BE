@@ -2,18 +2,17 @@
 % Je vais aussi parler du matériel utilisé, des contrainte et enfin des étapes qu'on a dû réalisé
 \section{Introduction}
 
-Notre projet consiste à programmer un robot KUKA de telle sorte qu'il puisse écrire sur un clavier seul.
-
+Notre objectif est de programmer un robot KUKA de manière à lui permettre d'écrire sur un clavier de manière autonome.
 
 \subsection{KUKA}
 
-\lettrine[nindent=0em,lines=3]{D}ans le cadre de mon projet d'étude, on a développé un système permettant à un bras mécanique KUKA de taper des choses sur un clavier.
-L'automatisation des tâches est devenue essentielle dans de nombreux domaines, et l'utilisation de bras mécaniques offre de vastes possibilités pour améliorer l'efficacité et la précision des processus.
+\lettrine[nindent=0em,lines=3]{D}ans le cadre de mon projet d'étude, nous avons créé un système qui permet à un bras mécanique KUKA d'effectuer la saisie de texte sur un clavier. 
+L'automatisation des tâches est devenue indispensable dans de nombreux domaines, et l'utilisation de bras mécaniques offre de nombreuses opportunités pour améliorer l'efficacité et la précision des processus.
 \\
 \\
-Kuka est avant tout une entreprise de robotique.
-C'est une société mondiale d'automatisation.
-Le siège de la société se trouve en Allemagne.
+KUKA est avant tout une entreprise de robotique.
+Elle est une société mondiale spécialisée dans l'automatisation.
+Le siège de l'entreprise est situé en Allemagne.
 %------------------------------------------------
 
 \section{Description des différentes parties du projet}
@@ -22,13 +21,13 @@ Lors de ce projet, nous sommes passer par plusieurs étapes.
 Voici une description brève des étapes ;
 
 \begin{itemize}
-    \item Maintenir une connexion avec le robot.
-    \item Configurer ses entrés pour qu'il puisse recevoir des coordonnées.
-    \item Programmer en KRL afin qu'il puisse utilisé ses entrés et procéder à des mouvements.
-    \item Bouger le robot avec les coordonnées envoyées.
+    \item Assurer une connexion continue avec le robot.
+    \item Configurer les entrées du robot pour recevoir des coordonnées.
+    \item Programmer en KRL afin que le robot puisse utiliser ces coordonnées pour effectuer des mouvements.
+    \item Déplacer le robot en utilisant les coordonnées envoyées.
     \item Prendre les coordonnées des touches du clavier.
-    \item Bouger le robot pour qu'il puisse taper sur le clavier juste en lui donnant la phrase à taper.
-    \item Initialiser les étapes à suivre pour que le robot sache ou appuyer pour réaliser un post.
+    \item Contrôler les mouvements du robot de manière à ce qu'il puisse taper sur le clavier en lui fournissant simplement la phrase à écrire.
+    \item Établir les étapes initiales nécessaires pour que le robot sache où appuyer afin d'effectuer une publication.
 \end{itemize}
 
 
@@ -53,43 +52,38 @@ Ce serveur permet de maintenir la connexion, recevoir/envoyer des coordonnées, 
 Les informations que le serveur envoie au robot est sous format \textbf{XML}.
 \\
 \\
-Le KRL permet de se connecter au serveur et d'utiliser les informations que le serveur lui envoie.
-Pour que le connexion se fasse, le programme a besoin d'information tels que l'adresse ip et le port du serveur.
-Ces informatios se retrouve dans un fichier XML.
-Ce fichier possède aussi d'autres informations tels que les données en entrés et en sortie du robot.
+Python a été utilisé pour créer une instance du serveur.
+Ce serveur assure la maintenance de la connexion, la réception et l'envoi des coordonnées, la vérification des coordonnées et la séquentialisation de la phrase que le robot doit taper.
+Les informations transmises du serveur au robot sont formatées en \textbf{XML}.
 \\
 \\
-Et en ce qui concerne le support de clavier, ce support est obligatoire en vue de respecter la zone de travail du robot.
-En effet, le robot possède une zone de travail.
-Lorsque le robot est hors de cette zone, le robot est inutillisable.
-Cette zone permet d'avoir une sécurité.
-Elle permet en autre d'éviter que le robot soit en conatct avec le plan de travail par exemple.
+Le support de clavier est indispensable pour respecter la zone de travail du robot.
+En effet, le robot dispose d'une zone de travail définie.
+Lorsqu'il se trouve en dehors de cette zone, le robot devient inutilisable.
+Cette zone de travail est essentielle pour garantir la sécurité.
+Elle permet notamment d'éviter tout contact indésirable entre le robot et le plan de travail, par exemple.
 \\
 \\
-Remarque, la phrase que le robot devra taper ne doit pas être longue.
-Si la phrase est trop longue à écrire, le temps pour que le robot tape la phrase est prolongé.
+Notez que la phrase que le robot doit taper ne doit pas être trop longue.
+Si la phrase est excessive en longueur, cela prolongera le temps nécessaire pour que le robot la tape.
 
 \subsection{Connexion}
 
-En ce qui concerne la connexion.
-Le robot est connecté en \textbf{VLAN}.
-Donc, il n'est pas directement lié au réseau.
-Pour pouvoir communiquer avec celui-ci, on est obligé de se connecte au VLAN.
+Pour la connexion, le robot est connecté via un \textbf{VLAN}, ce qui signifie qu'il n'est pas directement connecté au réseau principal.
+Afin de communiquer avec le robot, il est nécessaire de se connecter au VLAN spécifique associé.
 \\
 \\
-Lorsque la communication entre le serveur et le robot est assurés, on peut passer à l'étape suivante qui consiste à créer un fichier XML.
-Ce fichier XML contiendra toute les informations afin d'assurer la connexion.
-Comme par exemple, l'adresse ip du serveur, le port que le serveur utilise et le protocol utilisé pour communiquer.
+Une fois que la communication entre le serveur et le robot est établie, on peut passer à l'étape suivante, qui consiste à créer un fichier XML.
+Ce fichier XML contiendra toutes les informations nécessaires pour établir la connexion, telles que l'adresse IP du serveur, le port utilisé par le serveur et le protocole de communication utilisé.
 \\
 \\
-Et enfin, lorsque le fichier XML est bien configuré, on peut passer au programme KRL.
-On a crée un objet \textbf{RSI} de type \textbf{ST\_ETHERNET}.
-Cette objet spécifique au language \textbf{KRL} permettra d'initialisé la connexion.
-Lorsque la connexion a été établie, le robot commence par envoyé le premier fichier XML au serveur.
-Ce premier fichier contiendra des informations comme les coordonnées, mais aussi un \textbf{IPOC}.
-Cette valeur est composée de chiffre.
-Elle devra être renvoyé au robot selon un temps impartie.
-Si cette valeur n'est pas renvoyé dans les plus bréves délais, alors la connexion s'interromt.
+Enfin, une fois que le fichier XML est correctement configuré, nous pouvons passer au programme KRL.
+Nous avons créé un objet RSI (Robot Sensor Interface) de type \textbf{ST\_ETHERNET}.
+Cet objet spécifique au langage KRL permet d'initialiser la connexion.
+Une fois que la connexion est établie, le robot commence par envoyer le premier fichier XML au serveur.
+Ce premier fichier contient des informations telles que les coordonnées ainsi qu'un IPOC (Internal Point of Control).
+Cette valeur IPOC est une séquence numérique qui doit être renvoyée au robot dans un délai imparti.
+Si cette valeur n'est pas renvoyée dans les plus brefs délais, la connexion est interrompue.
 
 \subsection{Configuration du fichier XML}
 
@@ -103,7 +97,7 @@ Dans la balise racine se trouve 3 autres balises.
 Il y a une balise qui se nomme "\textbf{CONFIG}", une autre "\textbf{SEND}" et la dernière s'appelle "\textbf{RECEIVE}".
 \\
 \\
-La balise \textbf{CONFIG} va permettre de configurer les paramètres de communication.
+La balise \textbf{CONFIG} permet de configurer les paramètres de communication.
 On va y retrouver 6 autres balises ;
 \begin{itemize}
     \item "\textbf{IP\_NUMBER}" contenant l'addresse IP du serveur.
@@ -118,7 +112,7 @@ Concernant la balise \textbf{PROTOCOLLENGTH}, il a été initialisé à \textbf{
 \\
 Ensuite, la balise \textbf{SEND} permet de définir ce que le robot peut envoyer.
 Cette balise contient une sous-balise "\textbf{ELEMENTS}".
-Cette balise conteint aussi d'autres balises "\textbf{ELEMENT}".
+Cette balise contient aussi d'autres balises "\textbf{ELEMENT}".
 La balise \textbf{ELEMENT} a des attributs tels que ;
 \begin{itemize}
     \item \textbf{TAG} est le nom du tag qui sera généré par le robot.
@@ -126,22 +120,22 @@ La balise \textbf{ELEMENT} a des attributs tels que ;
     \item \textbf{INDX} est le numéro de sorite de l'objet.
     \item Et enfin, \textbf{UNIT} est l'unité utilisé pour la donnée.
 \end{itemize}
-Pour ce projet, j'ai juste besoin des coordonnées du robot.
-Le système possède déjà un objet préconfiguré qui se nomme "\textbf{DEF\_RIst}".
-C'est dans l'attribut \textbf{TAG} où on précise le nom de cette objet.
-Le type de cette objet est un \textbf{DOUBLE}, le numéro de sortie est \textbf{INTERNAL} et l'unité est \textbf{0}.
+Pour ce projet, on avait seulement besoin des coordonnées du robot. Le système dispose déjà d'un objet préconfiguré appelé "\textbf{DEF\_RIst}".
+C'est dans l'attribut "TAG" qu'on spécifie le nom de cet objet.
+Le type de cet objet est "DOUBLE", le numéro de sortie est "INTERNAL" et l'unité est "0".
+Cela nous permettra de récupérer les coordonnées du robot de manière précise et cohérente dans votre programme.
 \\
 \\
 Remarque, il existe plein d'autres mots-clés comme \textbf{DEF\_RSol} (envoie les commandes de positions cartésienne), ou le \textbf{DEF\_MACur} (envoie les courants moteur du robot de l'axe A1 à A6).
 \\
 \\
 Et enfin, la balise \textbf{RECEIVE} est la balise qui définie la sortie du robot.
-Cette balise à la même architecture que la balise \textbf{SEND}.
+Cette balise a la même architecture que la balise \textbf{SEND}.
 Toutefois, la balise \textbf{ELEMENT} contient un attribut en plus, c'est le \textbf{HOLDON}.
 Ce nouveau attribut va définir le comportement de l'objet reçu au robot lorsque celle-ci à une erreur.
 Elle a deux valeurs possibles ;
 \begin{itemize}
-    \item \textbf{0} permet de réinitialisé la veleurs reçu.
+    \item \textbf{0} permet de réinitialiser la valeurs reçu.
     \item \textbf{1} permet de maintenir l'ancienne valeur valide alors que la nouvelle valeur a une erreur.
 \end{itemize}
 Dans ce projet, tous les eléments ont un \textbf{HOLDON} à \textbf{1} afin d'assurer une localisation toujour valide.
@@ -151,20 +145,19 @@ Dans ce projet, tous les eléments ont un \textbf{HOLDON} à \textbf{1} afin d'a
 Passons maintenant dans le language KRL, on va définir les différents principes et outils utilisés dans le programme.
 \\
 \\
-Au début du programme, on commence d'abord par déclaré les variables utiles.
+Au début du programme, on commence d'abord par déclarer les variables utiles.
 Une variable de type \textbf{RSIERR} est déclaré.
-Cette variable permet, en autre, de récupérer la réponse d'une commande.
+Cette variable permet, en autre, de \textbf{récupérer} la réponse d'une commande.
 Des variables de type \textbf{INT} seront utilisées afin de stocker des entiers.
 Il y aura un entier (nommé \textbf{hEthernet}) contenant l'identifiant de l'objet permettant l'accés à l'objet \textbf{RSI}.
 Cette valeur est automatiquement assigné par le système lorsque l'objet RSI est créer.
 D'autres entiers seront utilisés pour identifié l'objet RSI.
 Et enfin, une variable de type \textbf{FRAME} sera déclaré.
 C'est une variable permettant de faire la liaison avec le capteur de coordonnée du système.
-Elle permet notemment de changer les coordonnées selon des nouvelles coordonnées reçu par le robot.
+Elle permet notamment de changer les coordonnées selon des nouvelles coordonnées reçu par le robot.
 \\
 \\
-Lorsque les déclarations de variables sont terminées.
-On peut alors passer à la configuration de l'objet \textbf{RSIERR} avec des méthodes mises à dispositions.
+Une fois que les déclarations de variables sont terminées, on peut passer à la configuration de l'objet RSIERR en utilisant les méthodes mises à disposition.
 \\
 \\
 La communication entre le controlleur du robot et un système externe est implémenté en utilisant l'objet \textbf{RSI ST\_ETHERNET}.
@@ -175,20 +168,21 @@ Cette objet prend trois paramètres.
 \\
 \\
 Le premier paramètre est l'identifiant de l'objet permettant l'accés à l'objet \textbf{RSI}.
-Dans notre cas, cette variable est appellé \textbf{hEthernet}.
+Dans notre cas, cette variable est appellée \textbf{hEthernet}.
 \\
 \\
 Le deuxième paramètre est un entier correspondant au nombre de containeur dans lequel l'objet RSI est crée.
-Nous ne voulons pas créer de containeur, on va donc précisé qu'aucun containeur doit être crée.
+Nous ne voulons pas créer de containeur, on va donc préciser qu'aucun containeur doit être crée.
 \\
 \\
 Et enfin, le troisème paramétre est le chemin d'accés vers le fichier de configuration XML. 
 \\
 \\
-L'objet RSI ST\_ETHERNET peut être configurer à l'aide de la commande \textbf{ST\_SETPARAM}.
-La seule configuration faite concerne le nombre maximum de paquet de donnée pouvant arrivé en retard au controlleur du robot.
-Ce paramètre se nomme \textbf{eERXmaxLatePackages} et on a définie ce nombre maximum à 500.
-Ce qui signifie que 500 est le nombre maximum de paquet de donnée qui peut être en retard.
+L'objet \textbf{RSI ST\_ETHERNET} peut être configuré à l'aide de la commande \textbf{ST\_SETPARAM}.
+Dans notre cas, la seule configuration effectuée concerne le nombre maximum de paquets de données pouvant arriver en retard au contrôleur du robot.
+Ce paramètre est appelé \textbf{eERXmaxLatePackages}, et on l'a défini à 500. 
+Cela signifie que le nombre maximal de paquets de données autorisés à arriver en retard est de 500.
+Cette configuration permet de gérer les éventuels retards de transmission des données tout en maintenant la stabilité et la performance de la communication entre le serveur et le robot.
 \\
 \\
 Lorsque la partie concernant la connexion est terminé, on peut commencer à mapper les entrés de données du robot.
@@ -206,18 +200,18 @@ Remarque importante, les variables seront accessible avec la variables du systè
 Où le terme "X" est l'indice qu'on utilise pour accéder à la variable reçu.
 \\
 \\
-Pour la sécurité du matériel, on active un cycle de correction.
-Ce cycle permet de corrigé les mouvements selon le système de référence qu'on utilise.
-On utilise le système \textbf{\#WORLD}.
-Pour activé cette correction, on utilise la commande \textbf{ST\_ON1(\#WORLD,1)}.
+
+Dans le but d'assurer la sécurité matérielle, on active un cycle de correction qui ajuste les mouvements du robot en fonction du système de référence utilisé, en l'occurrence le système \#WORLD.
+Pour activer cette correction, on utilise la commande \textbf{ST\_ON1(\#WORLD,1)}.
+Cette commande indique au robot de mettre en marche le cycle de correction lié au système de référence \#WORLD, ce qui permet d'obtenir des mouvements plus précis et adaptés à notre configuration spécifique.
 \\
 \\
-On peut enfin passer dans la création d'une boucle permettant de récupérer les nouvelles coordonnées envoyé par le système extenre.
-Dans cette boucle, on utilise la variable de type \textbf{FRAME}.
-Cette variable va contenir les nouvelles coordonnées à l'aide de la variable \textbf{\$SEN\_PREA[X]}.
-Lorsque les coordonnées sont initialisées, alors on peut procéder à un mouvement de type \textbf{PTP} (Point To Point).
-Ce type de mouvement point par point ne permet pas d'avoir un mouvement linéaire.
-Il permet juste de passer à un point dans l'espace qu'on définie avec une coordonnée.
+On peut maintenant passer à la création d'une boucle permettant de récupérer les nouvelles coordonnées envoyées par le système externe.
+Dans cette boucle, on utilise une variable de type \textbf{FRAME}.
+Cette variable va contenir les nouvelles coordonnées à l'aide de la variable \$SEN\_PREA[X].
+Une fois les coordonnées initialisées, on peut effectuer un mouvement de type PTP (Point To Point).
+Ce type de mouvement permet de se déplacer d'un point à un autre de manière directe, sans suivre une trajectoire linéaire.
+Il nous permet simplement de nous déplacer vers un point dans l'espace défini par les coordonnées spécifiées.
 
 \subsection{Mouvement}
 
